@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bookings {
+  id           String    @id
+  name         String?
+  phone        String?
+  mail         String?
+  utm_source   String?
+  utm_medium   String?
+  utm_campaign String?
+  fb           String?
+  createdat    DateTime? @db.Timestamp(6)
+  startsat     DateTime? @db.Timestamp(6)
+  endsat       DateTime? @db.Timestamp(6)
+  tentative    String?
+  cancelled    String?
+  timezone     String?
+  accountid    String?
+  profileid    String?
+}
