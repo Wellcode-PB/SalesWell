@@ -1,0 +1,22 @@
+{
+  "name": "saleswell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "prisma": "^3.9.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S7012MY/SalesWell.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/S7012MY/SalesWell/issues"
+  },
+  "homepage": "https://github.com/S7012MY/SalesWell#readme"
+}
