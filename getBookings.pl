@@ -8,7 +8,7 @@ use LWP::UserAgent;
 
 sub send_request {
   my $url = shift;
-  say $url;
+  # say $url;
   my $request = HTTP::Request->new(GET => $url);
   $request->header('Authorization' => "Bearer $ENV{CALENDLY_BEARER}");
   $request->header('Content-Type' => 'application/json');
@@ -27,7 +27,11 @@ sub save_event_in_db {
 
   my ($exists) = $db->query("SELECT 1 FROM ycbm_sync.bookings WHERE id=?", $event->{id})->list;
 
-  return 0 if $exists;
+  if ($exists) {
+    $db->query("UPDATE ycbm_sync.bookings SET team_member = ? WHERE id=?", 
+      $event->{team_member}, $event->{id});
+    return 0;
+  }
   $db->insert('ycbm_sync.bookings', $event);
 }
 
@@ -41,12 +45,15 @@ sub get_event_details {
   my %event;
   my $response = decode_json(send_request($link));
   return if $response->{resource}->{event_type} eq 'https://api.calendly.com/event_types/FEGN64Z5XYW3CYM2'; # mock interviews
-  # say Dumper($response);
 
   $event{createdAt} = $response->{resource}->{created_at};
   $event{startsAt} = $response->{resource}->{start_time};
   $event{endsAt} = $response->{resource}->{end_time};
   $event{id} = $response->{resource}->{uri};
+
+  $response = decode_json(send_request($response->{resource}
+    ->{event_memberships}[0]->{user}));
+  $event{team_member} = $response->{resource}->{email};
 
   $response = decode_json(send_request("$link/invitees"));
 
@@ -57,7 +64,6 @@ sub get_event_details {
   $event{utm_campaign} = $response->{collection}[0]->{tracking}->{utm_campaign};
   $event{utm_source} = $response->{collection}[0]->{tracking}->{utm_source};
   $event{utm_medium} = $response->{collection}[0]->{tracking}->{utm_medium};
-  # say Dumper($response);
 
   save_event_in_db(\%event);
   return %event;
@@ -77,6 +83,7 @@ sub get_all_events_by_link {
 
   my @bookings = @{$bookings->{collection}};
 
+  my $booking = $bookings[6];
   for my $booking (@bookings) {
     get_event_details($booking->{uri});
   }

@@ -12,6 +12,7 @@ model bookings {
   name         String?
   phone        String?
   mail         String?
+  team_member  String?
   utm_source   String?
   utm_medium   String?
   utm_campaign String?

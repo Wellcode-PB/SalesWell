@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/S7012MY/SalesWell/issues"
   },
-  "homepage": "https://github.com/S7012MY/SalesWell#readme"
+  "homepage": "https://github.com/S7012MY/SalesWell#readme",
+  "dependencies": {
+    "@prisma/client": "^3.9.2"
+  }
 }
