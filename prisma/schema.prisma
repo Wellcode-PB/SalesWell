@@ -8,21 +8,29 @@ datasource db {
 }
 
 model bookings {
-  id           String    @id
-  name         String?
-  phone        String?
-  mail         String?
-  team_member  String?
-  utm_source   String?
-  utm_medium   String?
-  utm_campaign String?
-  fb           String?
-  createdat    DateTime? @db.Timestamp(6)
-  startsat     DateTime? @db.Timestamp(6)
-  endsat       DateTime? @db.Timestamp(6)
-  tentative    String?
-  cancelled    String?
-  timezone     String?
-  accountid    String?
-  profileid    String?
+  id                   String          @id
+  name                 String?
+  phone                String?
+  mail                 String?
+  team_member          String?
+  status               booking_status? @relation("BookingStatus", references: [id], fields: [status_id])
+  status_id            String?
+  utm_source           String?
+  utm_medium           String?
+  utm_campaign         String?
+  fb                   String?
+  createdat            DateTime?       @db.Timestamp(6)
+  startsat             DateTime?       @db.Timestamp(6)
+  endsat               DateTime?       @db.Timestamp(6)
+  tentative            String?
+  cancelled            String?
+  timezone             String?
+  accountid            String?
+  profileid            String?
+}
+
+model booking_status {
+  id   String     @id
+  description String
+  bookings bookings[] @relation("BookingStatus")
 }

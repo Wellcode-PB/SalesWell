@@ -28,8 +28,8 @@ sub save_event_in_db {
   my ($exists) = $db->query("SELECT 1 FROM ycbm_sync.bookings WHERE id=?", $event->{id})->list;
 
   if ($exists) {
-    $db->query("UPDATE ycbm_sync.bookings SET team_member = ? WHERE id=?", 
-      $event->{team_member}, $event->{id});
+    $db->query("UPDATE ycbm_sync.bookings SET status_id = ? WHERE id = ?", 
+      $event->{status_id}, $event->{id});
     return 0;
   }
   $db->insert('ycbm_sync.bookings', $event);
@@ -50,6 +50,7 @@ sub get_event_details {
   $event{startsAt} = $response->{resource}->{start_time};
   $event{endsAt} = $response->{resource}->{end_time};
   $event{id} = $response->{resource}->{uri};
+  $event{status_id} = $response->{resource}->{status};
 
   $response = decode_json(send_request($response->{resource}
     ->{event_memberships}[0]->{user}));
@@ -79,7 +80,7 @@ sub get_all_events_by_link {
   my $bookings = decode_json($response);
 
   my $next_page = $bookings->{pagination}->{next_page};
-  say $next_page;
+  # say $next_page;
 
   my @bookings = @{$bookings->{collection}};
 
