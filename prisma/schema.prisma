@@ -36,9 +36,8 @@ model booking_status {
 }
 
 model team_members {
-  id         String    @id
+  mail         String    @id
   name       String
-  mail       String
   password   String
   last_login DateTime?
   role       Role      @default(USER)
