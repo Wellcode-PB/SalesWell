@@ -1,10 +1,13 @@
 # SalesWell
 
 # Known issues that need fixing ASAP
-[ ] Can't rerun tests without restarting server
-[ ] Tests need a better arhitecture
-[ ] Add CI tests
-[ ] Navbar has some white space around it
+- [ ] Can't rerun tests without restarting server
+
+- [ ] Tests need a better arhitecture
+
+- [ ] Add CI tests
+
+- [ ] Navbar has some white space around it
 
 # Running the project
 Create a new file named `.env` in the root directory with the following structure:
