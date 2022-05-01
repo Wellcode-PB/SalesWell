@@ -15,7 +15,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await bcrypt.compare(req.body.password, userObject.password)
   if (passwordsMatch) {
     delete userObject.password
-
     return res.status(200).json({
       success: true,
       user: JSON.stringify(userObject)

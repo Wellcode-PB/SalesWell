@@ -1,33 +1,6 @@
-describe('Generate user', () => {
+describe('User actions', () => {
   before(async () => {
-    await cy.exec('npx prisma migrate reset --force')
-  })
-
-  it('Should create a new user', () => {
-    cy.visit('http://localhost:3000/user/generate')
-
-    cy.get('input[id="mail"]').click().type('test@wellcode.com')
-    cy.get('input[id="name"]').click().type('test name')
-    cy.get('input[id="password"]').click().type('test password')
-
-    cy.get('button[id="generate"').click()
-
-    // TODO create a team members list component to check that the user was 
-    // actually created
-
-    cy.contains('User successfully created!')
-  })
-
-  it('Should not create a user with existing email', () => {
-    cy.visit('http://localhost:3000/user/generate')
-
-    cy.get('input[id="mail"]').click().type('test@wellcode.com')
-    cy.get('input[id="name"]').click().type('test name')
-    cy.get('input[id="password"]').click().type('test password')
-
-    cy.get('button[id="generate"').click()
-
-    cy.contains('Email is already in use!')
+    await cy.exec('dotenv -e .env.test -- npx prisma migrate reset --force')
   })
 
   it('Should login with correct credentials', () => {
@@ -36,13 +9,13 @@ describe('Generate user', () => {
     cy.get('button[id="login-button"]').click()
 
     cy.get('input[id="input-mail-for-credentials-provider"]').click()
-      .type('test@wellcode.com')
+      .type('normal@example.com')
     cy.get('input[id="input-password-for-credentials-provider"]').click()
-      .type('test password')
+      .type('password')
     cy.get('button').click()
 
     cy.url().should('eq', 'http://localhost:3000/')
-    cy.contains('Welcome to SalesWell test name')
+    cy.contains('Welcome to SalesWell normal user')
     cy.contains('Logout')
   })
 
@@ -51,7 +24,7 @@ describe('Generate user', () => {
 
     cy.contains('Login')
     cy.contains('Logout').should('not.exist')
-    cy.contains('Welcome to SalesWell test name').should('not.exist')
+    cy.contains('Welcome to SalesWell normal user').should('not.exist')
   })
 
   it('Should not login with incorrect user / password combination', () => {

@@ -6,10 +6,12 @@ export default NextAuth({
     CredentialsProvider({
       id: 'credentials',
       name: 'Email',
+
       credentials: {
         mail: { label: "Email", type: "text" },
         password: {  label: "Password", type: "password" }
       },
+
       async authorize(credentials, req) {
         const res = await fetch(process.env.SITE_URL + "/api/user/login", {
           method: 'POST',
@@ -19,13 +21,36 @@ export default NextAuth({
         const userResponse = await res.json()
 
         if (res.status === 200) {
-          return JSON.parse(userResponse.user)
+          const user = await JSON.parse(userResponse.user)
+          return user
         }
         return null
       }
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token = {
+          ...token,
+          ...user
+        }
+      }
+      return token
+    },
+
+    async session({ session, token, user }) {
+      return {
+        ...session,
+        ...token
+      }
+    }
+  },
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
   jwt: {
     secret: process.env.JWT_SECRET,
   },

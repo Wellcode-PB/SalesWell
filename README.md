@@ -12,6 +12,8 @@ Create a new file named `.env` in the root directory with the following structur
 DATABASE_URL="postgresql://db_user@localhost:5432/db_name?schema=ycbm_sync"
 JWT_SECRET="YOUR_RANDOM_STRING"
 NEXTAUTH_SECRET="YOUR_RANDOM_STRING_2"
+NEXTAUTH_URL="http://localhost:3000"
+SITE_URL="http://localhost:3000"
 ```
 
 # Testing
@@ -20,8 +22,11 @@ Create a new file named `.env.test` in the root directory with the following str
 DATABASE_URL="postgresql://db_user@localhost:5432/saleswell_test?schema=ycbm_sync"
 JWT_SECRET="TEST_JWT"
 NEXTAUTH_SECRET="TEST_SECRET"
+NEXTAUTH_URL="http://localhost:3000"
 ```
 
-Run `createdb saleswell_test` and `psql saleswell_test -c 'CREATE SCHEMA ycbm_sync'`
+Seed the database if you need:
+`dotenv -e .env.test npx prisma migrate reset --force`
+Run `createdb saleswell_test` and `psql saleswell_test -c 'CREATE SCHEMA ycbm_sync'`.
 
 Then run `npm run cypress`. You'll have to run `npm run test` on each test run.
