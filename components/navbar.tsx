@@ -1,7 +1,8 @@
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import AppBar from '@mui/material/AppBar'
+import Button from '@mui/material/Button'
+import Link from 'next/link'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
 import { signIn, signOut, useSession } from "next-auth/react"
 
@@ -14,9 +15,21 @@ function NavBar() {
         SalesWell
       </Typography>
       { session ? 
-        <Button color="inherit" id = "logout-button" onClick={() => signOut()}>
-          Logout
-        </Button>
+        <>
+          <Link href="/booking/list">
+            <Button color="inherit">
+              Bookings
+            </Button>
+          </Link>
+          <Link href="/prospects/list">
+            <Button color="inherit">
+              Prospect
+            </Button>
+          </Link>
+          <Button color="inherit" id = "logout-button" onClick={() => signOut()}>
+            Logout
+          </Button>
+        </>
         : <Button color="inherit" id="login-button" onClick={() => signIn()}>
           Login
         </Button> }

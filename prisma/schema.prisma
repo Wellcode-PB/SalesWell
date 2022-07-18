@@ -27,6 +27,7 @@ model bookings {
   timezone     String?
   accountid    String?
   profileid    String?
+  prospects    prospects?      @relation(fields: [mail], references: [mail])
 }
 
 model booking_status {
@@ -36,11 +37,18 @@ model booking_status {
 }
 
 model team_members {
-  mail         String    @id
+  mail       String    @id
   name       String
   password   String
   last_login DateTime?
   role       Role      @default(USER)
+}
+
+model prospects {
+  id       String     @id
+  name     String? 
+  mail     String     @unique
+  bookings bookings[]
 }
 
 enum Role {
