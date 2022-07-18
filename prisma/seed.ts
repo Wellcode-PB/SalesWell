@@ -1,7 +1,8 @@
 import { 
   PrismaClient, 
   bookings,
-  booking_status, 
+  booking_status,
+  prospects,
   team_members,
   Role 
 } from '@prisma/client'
@@ -60,6 +61,25 @@ bookingsList.forEach(async (booking) => {
 })
 
 let seedData = async (): Promise<void> => {
+  const prospects: prospects[] = [
+    {
+      id: 'prospect-1',
+      name: 'Prospect 1',
+      mail: 'booking1@gmail.com'
+    },
+    {
+      id: 'prospect-2',
+      name: 'Prospect 2',
+      mail: 'booking2@gmail.com'
+    }
+  ]
+
+  prospects.forEach(async (prospect) => {
+    await prisma.prospects.create({
+      data: prospect
+    })
+  })
+
   const statusTypes: booking_status[] = [
     {
       id: 'active',

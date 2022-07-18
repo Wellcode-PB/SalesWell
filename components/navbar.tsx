@@ -18,7 +18,12 @@ function NavBar() {
         <>
           <Link href="/booking/list">
             <Button color="inherit">
-                Bookings
+              Bookings
+            </Button>
+          </Link>
+          <Link href="/prospects/list">
+            <Button color="inherit">
+              Prospect
             </Button>
           </Link>
           <Button color="inherit" id = "logout-button" onClick={() => signOut()}>
