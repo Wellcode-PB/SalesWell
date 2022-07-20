@@ -23,3 +23,7 @@ Account ID: \
 Profile ID: \
 Team member: ionut\
 Status ID:`
+
+export const canceledStatus = `canceled`
+
+export const activeStatus = `active`

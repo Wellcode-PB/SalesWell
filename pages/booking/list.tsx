@@ -1,9 +1,11 @@
 import Alert from '@mui/material/Alert'
-import Booking from '../../components/booking'
+import Booking from '../../components/booking/booking_card'
 import hasNoUserAccess from '../../lib/utils'
 import prisma from '../../lib/prisma'
 
-function BookingList({ bookings }) {
+function BookingList({ data }) {
+  const bookings = data.bookings
+  const statuses = data.statuses
   if (!bookings) {
     return <Alert severity="info">Loading...</Alert>
   }
@@ -15,6 +17,7 @@ function BookingList({ bookings }) {
         : bookings.map((data) => (
           <Booking key={data.id}>
             {data}
+            {statuses}
           </Booking>
         ))}
     </>
@@ -31,13 +34,16 @@ export async function getServerSideProps(req) {
   }
 
   const data = await prisma.bookings.findMany()
+  const statuses = await prisma.booking_status.findMany()
   const length = data.length
   
   if (!length) {
     return {
       props: {
-        bookings: {
-          error: 'No bookings!'
+        data: {
+          bookings: {
+            error: 'No bookings!'
+          }
         }
       }
     }
@@ -45,7 +51,10 @@ export async function getServerSideProps(req) {
 
   return {
     props: {
-      bookings: JSON.parse(JSON.stringify(data))
+      data: {
+        bookings: JSON.parse(JSON.stringify(data)),
+        statuses: JSON.parse(JSON.stringify(statuses))
+      }
     }
   }
 }

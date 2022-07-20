@@ -1,6 +1,8 @@
+import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 
+import BookingStatusDropdown from './status'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -31,33 +33,33 @@ function Booking(data) {
     setExpanded(expanded === i ? false : i)
   }
 
-  const startsat = new Date(data.children.startsat)
-  const endsat = new Date(data.children.endsat)
-  const createdat = new Date(data.children.createdat)
+  const startsat = new Date(data.children[0].startsat)
+  const endsat = new Date(data.children[0].endsat)
+  const createdat = new Date(data.children[0].createdat)
 
   const fields = [
-    {id : "name", label : "Name", value : data.children.name},
-    {id : "phone", label : "Phone", value : data.children.phone},
-    {id : "mail", label : "Mail", value : data.children.mail},
+    {id : "name", label : "Name", value : data.children[0].name},
+    {id : "phone", label : "Phone", value : data.children[0].phone},
+    {id : "mail", label : "Mail", value : data.children[0].mail},
     {id : "startsat", label : "Starts at", 
       value : startsat.toLocaleString('ro-RO')},
     {id : "endsat", label : "Ends at", value : endsat.toLocaleString('ro-RO')},
-    {id : "id", label : "ID", value : data.children.id},
-    {id : "utm_source", label : "UTM SOURCE", value : data.children.utm_source},
-    {id : "utm_medium", label : "UTM MEDIUM", value : data.children.utm_medium},
+    {id : "id", label : "ID", value : data.children[0].id},
+    {id : "utm_source", label : "UTM SOURCE", value : data.children[0].utm_source},
+    {id : "utm_medium", label : "UTM MEDIUM", value : data.children[0].utm_medium},
     {id : "utm_campaign", label : "UTM CAMPAIGN", 
-      value : data.children.utm_campaign},
-    {id : "fb", label : "FB", value : data.children.fb},
-    {id : "timezone", label : "Timezone", value : data.children.timezone},
+      value : data.children[0].utm_campaign},
+    {id : "fb", label : "FB", value : data.children[0].fb},
+    {id : "timezone", label : "Timezone", value : data.children[0].timezone},
     {id : "createdat", label : "Created at", 
       value : createdat.toLocaleString('ro-RO')},
-    {id : "tentative", label : "Tentative", value : data.children.tentative},
-    {id : "cancelled", label : "Cancelled", value : data.children.cancelled},
-    {id : "accountid", label : "Account ID", value : data.children.accountid},
-    {id : "profileid", label : "Profile ID", value : data.children.profileid},
+    {id : "tentative", label : "Tentative", value : data.children[0].tentative},
+    {id : "cancelled", label : "Cancelled", value : data.children[0].cancelled},
+    {id : "accountid", label : "Account ID", value : data.children[0].accountid},
+    {id : "profileid", label : "Profile ID", value : data.children[0].profileid},
     {id : "team_member", label : "Team member", 
-      value : data.children.team_member},
-    {id : "status_id", label : "Status ID", value : data.children.status_id}
+      value : data.children[0].team_member},
+    {id : "status_id", label : "Status ID", value : data.children[0].status_id}
   ]
 
   const lengthPrimaryFields = 5
@@ -78,22 +80,33 @@ function Booking(data) {
 
   return (
     <>
-      <Card sx={{ width: 'auto', height: 'auto', m: 2}} elevation={5}>
-        <CardContent>
-          {fieldsRows}
-        </CardContent>
+      <Card sx={{ width: 'auto', height: 'auto', m: 2 }} elevation={5}>
+        <Grid container>
+          <Grid item xs>
+            <CardContent>
+              {fieldsRows}
+            </CardContent>
+          </Grid>
+          <Grid item xs container justifyContent="flex-end">
+            <BookingStatusDropdown>
+              {data.children[0].id}
+              {data.children[0].status_id}
+              {data.children[1]}
+            </BookingStatusDropdown>
+          </Grid>
+        </Grid>
         <CardActions disableSpacing>
           <ExpandMore
-            expand={expanded === data.children.id}
-            onClick={() => handleExpandClick(data.children.id)}
-            aria-expanded={expanded === data.children.id}
+            expand={expanded === data.children[0].id}
+            onClick={() => handleExpandClick(data.children[0].id)}
+            aria-expanded={expanded === data.children[0].id}
             aria-label="show more"
-            id={data.children.id}
+            id={data.children[0].id}
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
-        <Collapse in={expanded === data.children.id} timeout="auto" unmountOnExit>
+        <Collapse in={expanded === data.children[0].id} timeout="auto" unmountOnExit>
           <CardContent>
             {detailsFieldsRows}
           </CardContent>
