@@ -35,8 +35,14 @@ model booking_status {
   bookings    bookings[] @relation("BookingStatus")
 }
 
+model prospects {
+  id       Int        @id @default(autoincrement())
+  name     String? 
+  mail     String     @unique
+}
+
 model team_members {
-  mail         String    @id
+  mail       String    @id
   name       String
   password   String
   last_login DateTime?
