@@ -23,3 +23,9 @@ Account ID: \
 Profile ID: \
 Team member: ionut\
 Status ID:`
+
+export const prospect1 = `Prospect 1\
+booking1@gmail.com`
+
+export const prospect2 = `Prospect 2\
+booking2@gmail.com` 
