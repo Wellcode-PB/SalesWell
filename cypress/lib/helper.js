@@ -1,31 +1,34 @@
 export const booking1 = `Name: Booking 1\
-Phone: 0213212341\
+Phone: 0123456789\
 Mail: booking1@gmail.com\
 Starts at: 10.02.2019, 20:00:00\
 Ends at: 10.02.2020, 21:00:00`
 
-export const booking2 = `Name: Booking 2\
-Phone: 0213522341\
-Mail: booking2@gmail.com\
-Starts at: 10.02.2017, 20:00:00\
-Ends at: 10.02.2028, 21:00:00`
+export const booking1Details = {
+  id: "ID: A-1",
+  utm_source: "UTM SOURCE: utm source",
+  utm_medium: "UTM MEDIUM: utm medium",
+  utm_campaign: "UTM CAMPAIGN: utm campaign",
+  fb: "FB: fb",
+  timezone: "Timezone: ",
+  createdat: "Created at: 10.02.2018, 20:00:00",
+  tentative: "Tentative: ",
+  cancelled: "Cancelled: ",
+  accountid: "Account ID: ",
+  profileid: "Profile ID: ",
+  team_member: "Team member: ionut",
+  statusid: "Status ID: "
+}
 
-export const booking2Details = `ID: booking2\
-UTM SOURCE: utm source\
-UTM MEDIUM: utm medium\
-UTM CAMPAIGN: utm campaign\
-FB: fb\
-Timezone: \
-Created at: 10.02.2018, 20:00:00\
-Tentative: \
-Cancelled: \
-Account ID: \
-Profile ID: \
-Team member: ionut\
-Status ID:`
+//check if the first 10 bookings are displayed
+export function checkBookingsAreVisible() {
+  cy.contains(booking1)
+  cy.contains("Booking 2")
+  cy.contains("Booking 10")
+}
 
 export const prospect1 = `Prospect 1\
 booking1@gmail.com`
 
 export const prospect2 = `Prospect 2\
-booking2@gmail.com` 
+booking2@gmail.com`
