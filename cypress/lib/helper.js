@@ -1,16 +1,4 @@
-export const booking1 = `Name: Booking 1\
-Phone: 0213212341\
-Mail: booking1@gmail.com\
-Starts at: 10.02.2019, 20:00:00\
-Ends at: 10.02.2020, 21:00:00`
-
-export const booking2 = `Name: Booking 2\
-Phone: 0213522341\
-Mail: booking2@gmail.com\
-Starts at: 10.02.2017, 20:00:00\
-Ends at: 10.02.2028, 21:00:00`
-
-export const booking2Details = `ID: booking2\
+export const booking1Details = `ID: booking1\
 UTM SOURCE: utm source\
 UTM MEDIUM: utm medium\
 UTM CAMPAIGN: utm campaign\
@@ -23,6 +11,16 @@ Account ID: \
 Profile ID: \
 Team member: ionut\
 Status ID:`
+
+export const bookingsList = []
+for (let i = 0; i <= 24; ++i) {
+  bookingsList.push(
+`Name: Booking ` + i + `\
+Phone: 0123456789\
+Mail: booking` + i + `@gmail.com\
+Starts at: 10.02.2019, 20:00:00\
+Ends at: 10.02.2020, 21:00:00`)
+}
 
 export const prospect1 = `Prospect 1\
 booking1@gmail.com`
