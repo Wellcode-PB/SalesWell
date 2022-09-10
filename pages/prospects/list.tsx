@@ -1,46 +1,40 @@
-import Alert from '@mui/material/Alert'
+import GetMorePageData from '../../components/get_more_page_data'
 import Profile from '../../components/prospects/profile'
-import hasNoUserAccess from '../../lib/utils'
-import prisma from '../../lib/prisma'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { useEffect, useState } from 'react'
 
-function ProspectList({ prospects }) {
+function ProspectList() {
+  const [prospectsLength, setProspectsLength] = useState(0)
+  const [prospects, setProspects] = useState([])
+  const [hasMore, setHasMore] = useState(true)
+
+  const dataParams = {
+    dataLength: prospectsLength,
+    setDataLength: setProspectsLength,
+    setData: setProspects,
+    setHasMore: setHasMore,
+    resultSource: "prospects"
+  }
+
+  useEffect(() => {
+    GetMorePageData(dataParams)
+  }, [])
+
   return (
     <>
-      {prospects.error ? 
-        <Alert severity="error">{prospects.error}</Alert>
-        : prospects.map((data) => (
+      <InfiniteScroll
+        dataLength={prospects.length}
+        next={() => {GetMorePageData(dataParams)}}
+        hasMore={hasMore}
+        loader={<h3> Loading...</h3>}
+        endMessage={<h4>Nothing more to show</h4>}
+      >
+        {prospects.map((data) => (
           <Profile key={data.id} prospect={data}/>
         ))}
+      </InfiniteScroll>
     </>
   )
 }
 
 export default ProspectList
-
-export async function getServerSideProps(req) {
-  const hasNoAccess = await hasNoUserAccess(req)
-
-  if (hasNoAccess) {
-    return hasNoAccess
-  }
-
-  const data = await prisma.prospects.findMany()
-  
-  const length = data.length
-
-  if (!length) {
-    return {
-      props: {
-        prospects: {
-          error: 'No prospects!'
-        }
-      }
-    }
-  }
-
-  return {
-    props: { 
-      prospects: JSON.parse(JSON.stringify(data))
-    }
-  }
-}
