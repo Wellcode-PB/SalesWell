@@ -1,8 +1,4 @@
 describe('Generate users', () => {
-  before(async () => {
-    await cy.exec('dotenv -e .env.test -- npx prisma migrate reset --force')
-  })
-
   it('Should not have permissions when not logged in', () => {
     cy.visit('http://localhost:3000/user/generate')
     cy.get('input[id="mail"]').click().type('test@wellcode.com')
