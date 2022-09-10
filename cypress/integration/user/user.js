@@ -1,8 +1,4 @@
 describe('User actions', () => {
-  before(async () => {
-    await cy.exec('dotenv -e .env.test -- npx prisma migrate reset --force')
-  })
-
   it('Should login with correct credentials', () => {
     cy.clearCookies()
     cy.visit('http://localhost:3000/')

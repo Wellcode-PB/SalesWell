@@ -1,10 +1,6 @@
 import { prospect1, prospect2 } from '../../lib/helper.js'
 
 describe('List prospects', () => {
-  before(async () => {
-    await cy.exec('dotenv -e .env.test -- npx prisma migrate reset --force')
-  })
-
   it('Should not have permissions when not logged in', () => {
     cy.visit('http://localhost:3000/prospects/list')
 

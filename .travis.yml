@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "14.17"
+env:
+  - DATABASE_URL="postgresql://travis@localhost:5432/saleswell_test?schema=ycbm_sync" 
+    JWT_SECRET="RANDOM_STRING" 
+    NEXTAUTH_SECRET="RANDOM_STRING_2" 
+    NEXTAUTH_URL="http://localhost:3000" 
+    SITE_URL="http://localhost:3000"
+services:
+  - postgresql
+cache:
+  directories:
+    - node_modules
+before_script: 
+  - psql -c 'create database saleswell_test;' -U travis
+  - npm install -g dotenv-cli
+  - prisma migrate dev --name init
+  - npx prisma db seed
+script: 
+  - npm run dev &
+  - npx cypress run --browser chrome

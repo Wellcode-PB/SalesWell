@@ -6,7 +6,6 @@ import {
 
 describe('List bookings', () => {
   before(() => {
-      cy.exec('dotenv -e .env.test -- npx prisma migrate reset --force')
       cy.task('db:seedBookings')
     }
   )
