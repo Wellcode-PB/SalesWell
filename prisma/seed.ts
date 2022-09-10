@@ -1,6 +1,5 @@
 import { 
   PrismaClient, 
-  bookings,
   booking_status,
   prospects,
   team_members,
@@ -27,55 +26,6 @@ const prospects: prospects[] = [
 prospects.forEach(async (prospect) => {
   await prisma.prospects.create({
     data: prospect
-  })
-})
-
-const bookingsList: bookings[] = [
-  {
-    id: 'booking1',
-    name: 'Booking 1',
-    phone: '0213212341',
-    mail: 'booking1@gmail.com',
-    team_member:  'andrei',
-    status_id:    null,
-    utm_source:   'utm source',
-    utm_medium:   'utm medium',
-    utm_campaign: 'utm campaign',
-    fb:           'fb',
-    createdat:    new Date('2020/02/10 20:00:00'),
-    startsat:     new Date('2019/02/10 20:00:00'),
-    endsat:       new Date('2020/02/10 21:00:00'),
-    tentative:    '',
-    cancelled:    '',
-    timezone:     '',
-    accountid:    '',
-    profileid:    ''
-  }, 
-  {
-    id: 'booking2',
-    name: 'Booking 2',
-    phone: '0213522341',
-    mail: 'booking2@gmail.com',
-    team_member:  'ionut',
-    status_id:    null,
-    utm_source:   'utm source',
-    utm_medium:   'utm medium',
-    utm_campaign: 'utm campaign',
-    fb:           'fb',
-    createdat:    new Date('2018/02/10 20:00:00'),
-    startsat:     new Date('2017/02/10 20:00:00'),
-    endsat:       new Date('2028/02/10 21:00:00'),
-    tentative:    '',
-    cancelled:    '',
-    timezone:     '',
-    accountid:    '',
-    profileid:    ''
-  }
-]
-
-bookingsList.forEach(async (booking) => {
-  await prisma.bookings.create({
-    data: booking
   })
 })
 
