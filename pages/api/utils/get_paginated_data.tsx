@@ -23,5 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     skip: skipCount,
     take: 10
   })
+
   return res.send(data)
 }

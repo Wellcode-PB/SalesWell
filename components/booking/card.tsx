@@ -1,6 +1,8 @@
+import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 
+import BookingStatusDropdown from './status'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -11,7 +13,7 @@ import Typography from '@mui/material/Typography'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
-}  
+}
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const { expand, ...other } = props
@@ -24,40 +26,40 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     })
   }))
 
-function Booking(data) {
+function Booking({bookingData, statusesTypes}) {
   const [expanded, setExpanded] = useState(false)
   
   function handleExpandClick(i) {
     setExpanded(expanded === i ? false : i)
   }
 
-  const startsat = new Date(data.children.startsat)
-  const endsat = new Date(data.children.endsat)
-  const createdat = new Date(data.children.createdat)
+  const startsat = new Date(bookingData.startsat)
+  const endsat = new Date(bookingData.endsat)
+  const createdat = new Date(bookingData.createdat)
 
   const fields = [
-    {id : "name", label : "Name", value : data.children.name},
-    {id : "phone", label : "Phone", value : data.children.phone},
-    {id : "mail", label : "Mail", value : data.children.mail},
+    {id : "name", label : "Name", value : bookingData.name},
+    {id : "phone", label : "Phone", value : bookingData.phone},
+    {id : "mail", label : "Mail", value : bookingData.mail},
     {id : "startsat", label : "Starts at", 
       value : startsat.toLocaleString('ro-RO')},
     {id : "endsat", label : "Ends at", value : endsat.toLocaleString('ro-RO')},
-    {id : "id", label : "ID", value : data.children.id},
-    {id : "utm_source", label : "UTM SOURCE", value : data.children.utm_source},
-    {id : "utm_medium", label : "UTM MEDIUM", value : data.children.utm_medium},
+    {id : "id", label : "ID", value : bookingData.id},
+    {id : "utm_source", label : "UTM SOURCE", value : bookingData.utm_source},
+    {id : "utm_medium", label : "UTM MEDIUM", value : bookingData.utm_medium},
     {id : "utm_campaign", label : "UTM CAMPAIGN", 
-      value : data.children.utm_campaign},
-    {id : "fb", label : "FB", value : data.children.fb},
-    {id : "timezone", label : "Timezone", value : data.children.timezone},
+      value : bookingData.utm_campaign},
+    {id : "fb", label : "FB", value : bookingData.fb},
+    {id : "timezone", label : "Timezone", value : bookingData.timezone},
     {id : "createdat", label : "Created at", 
       value : createdat.toLocaleString('ro-RO')},
-    {id : "tentative", label : "Tentative", value : data.children.tentative},
-    {id : "cancelled", label : "Cancelled", value : data.children.cancelled},
-    {id : "accountid", label : "Account ID", value : data.children.accountid},
-    {id : "profileid", label : "Profile ID", value : data.children.profileid},
+    {id : "tentative", label : "Tentative", value : bookingData.tentative},
+    {id : "cancelled", label : "Cancelled", value : bookingData.cancelled},
+    {id : "accountid", label : "Account ID", value : bookingData.accountid},
+    {id : "profileid", label : "Profile ID", value : bookingData.profileid},
     {id : "team_member", label : "Team member", 
-      value : data.children.team_member},
-    {id : "status_id", label : "Status ID", value : data.children.status_id}
+      value : bookingData.team_member},
+    {id : "status_id", label : "Status ID", value : bookingData.status_id}
   ]
 
   const lengthPrimaryFields = 5
@@ -78,22 +80,33 @@ function Booking(data) {
 
   return (
     <>
-      <Card sx={{ width: 'auto', height: 'auto', m: 2}} elevation={5}>
-        <CardContent>
-          {fieldsRows}
-        </CardContent>
+      <Card sx={{ width: 'auto', height: 'auto', m: 2 }} elevation={5}>
+        <Grid container>
+          <Grid item xs>
+            <CardContent>
+              {fieldsRows}
+            </CardContent>
+          </Grid>
+          <Grid item xs container justifyContent="flex-end">
+            <BookingStatusDropdown 
+              key={bookingData.id} 
+              bookingId={bookingData.id} 
+              bookingStatus={bookingData.status_id} 
+              statusesTypes={statusesTypes} />
+          </Grid>
+        </Grid>
         <CardActions disableSpacing>
           <ExpandMore
-            expand={expanded === data.children.id}
-            onClick={() => handleExpandClick(data.children.id)}
-            aria-expanded={expanded === data.children.id}
+            expand={expanded === bookingData.id}
+            onClick={() => handleExpandClick(bookingData.id)}
+            aria-expanded={expanded === bookingData.id}
             aria-label="show more"
-            id={data.children.id}
+            id={bookingData.id}
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
-        <Collapse in={expanded === data.children.id} timeout="auto" unmountOnExit>
+        <Collapse in={expanded === bookingData.id} timeout="auto" unmountOnExit>
           <CardContent>
             {detailsFieldsRows}
           </CardContent>
