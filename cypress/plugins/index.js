@@ -23,6 +23,10 @@ module.exports = (on, config) => {
     'db:seedBookings': () => {
       const seed = require('../../prisma/seedBookings.ts')
       return null
+    },
+    'db:seedProspects': () => {
+      const seed = require('../../prisma/seedProspects.ts')
+      return null
     }
   })
 }

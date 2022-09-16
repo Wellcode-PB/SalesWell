@@ -30,5 +30,9 @@ export function checkBookingsAreVisible() {
 export const prospect1 = `Prospect 1\
 booking1@gmail.com`
 
-export const prospect2 = `Prospect 2\
-booking2@gmail.com`
+//check if the first 10 prospects are displayed
+export function checkProspectsAreVisible() {
+  cy.contains(prospect1)
+  cy.contains("Prospect 2")
+  cy.contains("Prospect 10")
+}

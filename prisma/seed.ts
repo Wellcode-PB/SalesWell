@@ -1,7 +1,6 @@
 import { 
   PrismaClient, 
   booking_status,
-  prospects,
   team_members,
   Role 
 } from '@prisma/client'
@@ -9,25 +8,6 @@ import {
 const bcrypt = require('bcrypt')
 
 const prisma = new PrismaClient()
-
-const prospects: prospects[] = [
-  {
-    id: 1,
-    name: 'Prospect 1',
-    mail: 'booking1@gmail.com'
-  },
-  {
-    id: 2,
-    name: 'Prospect 2',
-    mail: 'booking2@gmail.com'
-  }
-]
-
-prospects.forEach(async (prospect) => {
-  await prisma.prospects.create({
-    data: prospect
-  })
-})
 
 let seedData = async (): Promise<void> => {
   const statusTypes: booking_status[] = [
