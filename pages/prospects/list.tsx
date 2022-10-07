@@ -1,4 +1,4 @@
-import GetMorePageData from '../../components/get_more_page_data'
+import getMorePageData from '../../lib/get_more_page_data'
 import Profile from '../../components/prospects/profile'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,7 @@ function ProspectList() {
   const [prospects, setProspects] = useState([])
   const [hasMore, setHasMore] = useState(true)
 
-  const dataParams = {
+  const getMorePageDataParams = {
     dataLength: prospectsLength,
     setDataLength: setProspectsLength,
     setData: setProspects,
@@ -17,14 +17,14 @@ function ProspectList() {
   }
 
   useEffect(() => {
-    GetMorePageData(dataParams)
+    getMorePageData(getMorePageDataParams)
   }, [])
 
   return (
     <>
       <InfiniteScroll
         dataLength={prospects.length}
-        next={() => {GetMorePageData(dataParams)}}
+        next={() => {getMorePageData(getMorePageDataParams)}}
         hasMore={hasMore}
         loader={<h3> Loading...</h3>}
         endMessage={<h4>Nothing more to show</h4>}
