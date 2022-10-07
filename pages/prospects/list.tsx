@@ -4,13 +4,11 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useEffect, useState } from 'react'
 
 function ProspectList() {
-  const [prospectsLength, setProspectsLength] = useState(0)
   const [prospects, setProspects] = useState([])
   const [hasMore, setHasMore] = useState(true)
 
   const getMorePageDataParams = {
-    dataLength: prospectsLength,
-    setDataLength: setProspectsLength,
+    data: prospects,
     setData: setProspects,
     setHasMore: setHasMore,
     resultSource: "prospects"

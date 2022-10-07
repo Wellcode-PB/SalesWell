@@ -16,7 +16,7 @@ for (let i = 1; i <= 20; ++i) {
     utm_campaign: 'utm campaign',
     fb:           'fb',
     createdat:    new Date('2018/02/10 20:00:00'),
-    startsat:     new Date('2019/02/10 20:00:00'),
+    startsat:     new Date('2019/02/10 ' + i + ':00:00'),
     endsat:       new Date('2020/02/10 21:00:00'),
     tentative:    '',
     cancelled:    '',
