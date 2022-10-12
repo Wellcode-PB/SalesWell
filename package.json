@@ -17,6 +17,7 @@
     "dev": "next dev",
     "build": "next build",
     "cypress": "dotenv -e .env.test cypress open",
+    "cy:run": "dotenv -e .env.test cypress run",
     "start": "next start",
     "lint": "next lint",
     "test": "dotenv -e .env.test next dev"
@@ -44,6 +45,7 @@
     "aws-sdk": "^2.1194.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
+    "caniuse-lite": "^1.0.30001425",
     "dotenv": "^16.0.1",
     "dotenv-cli": "^6.0.0",
     "fs": "^0.0.1-security",
