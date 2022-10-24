@@ -12,14 +12,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const skipCount = parseInt((req.query.skip).toString())
   const resultSource = (req.query.resultSource).toString()
 
+  const order = (req.query.orderBy).toString()
+  const sortOrder = (req.query.sortOrder).toString() === 'desc' ? 'desc' : 'asc'
+
   let query:any = prisma.bookings
   if (resultSource === 'prospects') {
     query = prisma.prospects
   }
+  
+  let orderBy:any = { id: sortOrder }
+  if (order === 'startsat') {
+    orderBy = { startsat: sortOrder }
+  }
+
   const data = await query.findMany({
-    orderBy: {
-      id: 'asc'
-    },
+    orderBy: orderBy,
     skip: skipCount,
     take: 10
   })

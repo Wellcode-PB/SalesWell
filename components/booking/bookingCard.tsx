@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 
-import BookingStatusDropdown from './status'
+import BookingStatusDropdown from './bookingStatusDropdown'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -26,7 +26,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     })
   }))
 
-function Booking({bookingData, statusesTypes}) {
+function BookingCard({bookingData, statusesTypes}) {
   const [expanded, setExpanded] = useState(false)
   
   function handleExpandClick(i) {
@@ -116,4 +116,4 @@ function Booking({bookingData, statusesTypes}) {
   )
 }
 
-export default Booking
+export default BookingCard
