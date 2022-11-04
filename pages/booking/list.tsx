@@ -3,6 +3,7 @@ import BookingsFilter from '../../components/booking/bookingsFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import getBookingStatusTypes from '../../lib/get_booking_status_types'
 import getMorePageData from '../../lib/get_more_page_data'
+import getTeamMembers from '../../lib/get_team_members'
 
 import { useEffect, useState } from 'react'
 
@@ -12,14 +13,18 @@ function BookingList() {
   const [statusesTypes, setStatusTypes] = useState()
   const [orderBy, setOrderBy] = useState('default')
   const [sortOrder, setSortOrder] = useState('default')
+  const [teamMembers, setTeamMembers] = useState([])
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState([])
 
   const getMorePageDataParams = {
     data: bookings,
     orderBy: orderBy,
     resultSource: "bookings",
+    selectedTeamMembers,
     setData: setBookings,
     setHasMore: setHasMore,
     setOrderBy: setOrderBy,
+    setSelectedTeamMembers,
     setSortOrder: setSortOrder,
     sortOrder: sortOrder
   }
@@ -27,11 +32,14 @@ function BookingList() {
   useEffect(() => {
     getMorePageData(getMorePageDataParams)
     getBookingStatusTypes(setStatusTypes)
-  }, [orderBy, sortOrder])
+    getTeamMembers(setTeamMembers)
+  }, [orderBy, sortOrder, selectedTeamMembers])
 
   return (
     <>
-      <BookingsFilter dataUpdateParams={getMorePageDataParams} />
+      <BookingsFilter 
+        dataUpdateParams={getMorePageDataParams} 
+        teamMembers={teamMembers} />
       <InfiniteScroll
         dataLength={bookings.length}
         next={() => {getMorePageData(getMorePageDataParams)}}

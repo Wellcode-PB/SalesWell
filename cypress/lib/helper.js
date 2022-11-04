@@ -16,7 +16,7 @@ export const booking1Details = {
   cancelled: "Cancelled: ",
   accountid: "Account ID: ",
   profileid: "Profile ID: ",
-  team_member: "Team member: ionut",
+  team_member: "Team member: admin user",
   statusid: "Status ID: "
 }
 
@@ -51,13 +51,19 @@ export function checkBookingsOrder(expectedData) {
 export function createBookingsDataTest() {
   const bookingsDataTest = []
   for (let i = 1; i <= 20; ++i) {
+    let teamMember = 'admin user'
+    if (i % 2 == 0) {
+      teamMember = 'normal user'
+    }
+
     bookingsDataTest[i - 1] = [
       String.fromCharCode(i + 64) + '-' + i, //id
       "Booking " + i,                        //name
       "0123456789",                          //phone
       "booking" + i + "@gmail.com",          //mail
       "10.02.2019, 0" + i + ":00:00",        //startsat
-      "10.02.2020, 21:00:00"                 //endsat
+      "10.02.2020, 21:00:00",                //endsat
+      teamMember                             //team_member
     ]
     //we have to get rid of "0" if the hour is bigger than 9
     if (i > 9) {
@@ -85,5 +91,14 @@ export function sortBookingsDataTest(bookingsDataTest, sortBy, sortOrder) {
     return 0
   })
   
+  return bookingsDataTest
+}
+
+export function filterBookingsByTeamMembers(bookingsDataTest, teamMembers) {
+  for (let i = 0; i < bookingsDataTest.length; ++i) {
+    if (!teamMembers.includes(bookingsDataTest[i][6])) {
+      bookingsDataTest.splice(i, 1)
+    }
+  }
   return bookingsDataTest
 }

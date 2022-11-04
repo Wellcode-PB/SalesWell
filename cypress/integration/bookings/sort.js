@@ -1,6 +1,7 @@
 import { 
   checkBookingsOrder, 
   createBookingsDataTest, 
+  filterBookingsByTeamMembers,
   sortBookingsDataTest 
 } from '../../lib/helper.js'
 
@@ -87,6 +88,185 @@ describe('Sort bookings', () => {
     cy.get('[id="sort-asc"]').first().click()
     
     expectedData = sortBookingsDataTest(bookingsData, sortByStartsat, 'asc')
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+  })
+
+  it('Check sorting by "admin user" team member', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/booking/list')
+
+    const sortById = 0
+    let bookingsData = createBookingsDataTest()
+
+    //bookings should be sorted ascending by id
+    //(ascending by default)
+    cy.get('[id="sort-by-team-member"]').first().click()
+    cy.get('[id="admin@example.com"]').first().click()
+
+    let expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'asc'), ['admin user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by id
+    cy.get('body').click(0, 0)
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-desc"]').first().click()
+    
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'desc'), ['admin user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by date
+    cy.get('[id="sort-by"]').first().click()
+    cy.get('[id="sort-by-date"]').first().click()
+
+    const sortByStartsat = 4
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'desc'), ['admin user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-asc"]').first().click()
+
+    //bookings should be sorted ascending by date
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'asc'), ['admin user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+  })
+
+  it('Check sorting by "normal user" team member', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/booking/list')
+
+    const sortById = 0
+    let bookingsData = createBookingsDataTest()
+
+    //bookings should be sorted ascending by id
+    //(ascending by default)
+    cy.get('[id="sort-by-team-member"]').first().click()
+    cy.get('[id="normal@example.com"]').first().click()
+
+    let expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'asc'), ['normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by id
+    cy.get('body').click(0, 0)
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-desc"]').first().click()
+    
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'desc'), ['normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by date
+    cy.get('[id="sort-by"]').first().click()
+    cy.get('[id="sort-by-date"]').first().click()
+
+    const sortByStartsat = 4
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'desc'), ['normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-asc"]').first().click()
+
+    //bookings should be sorted ascending by date
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'asc'), ['normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+  })
+
+  it('Check sorting by "Select All" members filter', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/booking/list')
+
+    const sortById = 0
+    let bookingsData = createBookingsDataTest()
+
+    //bookings should be sorted ascending by id
+    //(ascending by default)
+    cy.get('[id="sort-by-team-member"]').first().click()
+    cy.get('[id="select-all"]').first().click()
+    
+    let expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'asc'), 
+      ['admin user', 'normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by id
+    cy.get('body').click(0, 0)
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-desc"]').first().click()
+    
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'desc'),
+      ['admin user', 'normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //bookings should be sorted descending by date
+    cy.get('[id="sort-by"]').first().click()
+    cy.get('[id="sort-by-date"]').first().click()
+
+    const sortByStartsat = 4
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'desc'),
+      ['admin user', 'normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    cy.get('[id="ordering"]').first().click()
+    cy.get('[id="sort-asc"]').first().click()
+
+    //bookings should be sorted ascending by date
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortByStartsat, 'asc'),
+      ['admin user', 'normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+  })
+
+  it('Check deselect of members filter', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/booking/list')
+
+    const sortById = 0
+    let bookingsData = createBookingsDataTest()
+
+    //bookings should be sorted ascending by id
+    //(ascending by default)
+    cy.get('[id="sort-by-team-member"]').first().click()
+    cy.get('[id="select-all"]').first().click()
+    cy.wait(300)
+    //deselect 'admin user'
+    cy.get('[id="admin@example.com"]').first().click()
+
+    //bookings of 'admin user' should not be listed
+    let expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'asc'), ['normal user'])
+    cy.wait(300)
+    checkBookingsOrder(expectedData)
+
+    //deselect 'normal user' and select 'admin user'
+    cy.get('[id="normal@example.com"]').first().click()
+    cy.wait(300)
+    cy.get('[id="admin@example.com"]').first().click()
+    bookingsData = createBookingsDataTest()
+
+    //bookings of 'normal user' should not be listed
+    expectedData = filterBookingsByTeamMembers(
+      sortBookingsDataTest(bookingsData, sortById, 'asc'), ['admin user'])
     cy.wait(300)
     checkBookingsOrder(expectedData)
   })

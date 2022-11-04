@@ -14,6 +14,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const order = (req.query.orderBy).toString()
   const sortOrder = (req.query.sortOrder).toString() === 'desc' ? 'desc' : 'asc'
+  const selectedTeamMembers = 
+    ((req.query.selectedTeamMembers).toString()).split(",")
+
 
   let query:any = prisma.bookings
   if (resultSource === 'prospects') {
@@ -25,11 +28,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     orderBy = { startsat: sortOrder }
   }
 
-  const data = await query.findMany({
-    orderBy: orderBy,
-    skip: skipCount,
-    take: 10
-  })
+  let filterByTeamMembers:any = { }
+  if (selectedTeamMembers[0] !== '') {
+    filterByTeamMembers = { team_member: { in: selectedTeamMembers } }
+  }
+  let data = []
+  if (resultSource === 'prospects') {
+    data = await query.findMany({
+      orderBy: orderBy,
+      skip: skipCount,
+      take: 10
+    })
+  } else {
+    data = await query.findMany({
+      where: filterByTeamMembers,
+      orderBy: orderBy,
+      skip: skipCount,
+      take: 10
+    })
+  }
 
   return res.send(data)
 }
