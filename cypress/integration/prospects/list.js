@@ -1,4 +1,8 @@
-import { checkProspectsAreVisible, prospect1 } from '../../lib/helper.js'
+import { 
+  checkProspectsAreVisible, 
+  prospect1,
+  validateEmailFormat
+} from '../../lib/helper.js'
 
 describe('List prospects', () => {
   before(() => {
@@ -48,5 +52,147 @@ describe('List prospects', () => {
     cy.contains("Prospect 20")
     cy.scrollTo('bottom')
     cy.contains('Nothing more to show')
+  })
+})
+
+describe('Create prospect', () => {
+  it('Should have permissions when logged in as user', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // fill the text fields for email, name, and phone
+    cy.get('input[id="mail"]').click().type('test@wellcode.com')
+    cy.get('input[id="name"]').click().type('test name')
+    cy.get('input[id="phone"]').click().type('0707070707')
+
+    // create a new prospect and check for success message
+    cy.get('button[id="create"').click()
+    cy.contains('Prospect successfully created!')
+
+    // reload the page and check if the newly created prospect appears in the
+    // list, also we need to scroll all the way down 3 times to make the 21st
+    // prospect visible
+    cy.reload()
+    cy.scrollTo('bottom').contains('Prospect 10')
+    cy.scrollTo('bottom').contains('Prospect 20')
+    cy.scrollTo('bottom').contains('test name')
+    cy.contains('test@wellcode.com')
+  })
+
+  it('Should not create a prospect with existing email', () => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // fill the text fields for email, name, and phone
+    cy.get('input[id="mail"]').click().type('test@wellcode.com')
+    cy.get('input[id="name"]').click().type('test name')
+    cy.get('input[id="phone"]').click().type('0700000000')
+
+    // try to create a new prospect and check for error message
+    cy.get('button[id="create"').click()
+    cy.contains('Email is already in use!')
+  })
+
+  it('Should not create a prospect with invalid email address', () => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // fill the text fields for name and phone number
+    cy.get('input[id="name"]').click().type('test name')
+    cy.get('input[id="phone"]').click().type('0777777777')
+
+    // the individual (local) part of an email address may consist only of the 
+    // ASCII standard characters. The dot however, cannot be the initial or 
+    // final character, or cannot be used in succession.
+    validateEmailFormat('.test@wellcode.com')
+    validateEmailFormat('test.@wellcode.com')
+    validateEmailFormat('te..st@wellcode.com')
+
+    // the domain name part comprises of the following characters: 
+    // digits (0 - 9), lowercase and uppercase Latin letters (a - z and A - Z), 
+    // hyphen or dot (– or .), as long as they are not the initial 
+    // or final characters.
+    validateEmailFormat('test@.wellcode.com')
+    validateEmailFormat('test@wellcode..com')
+    validateEmailFormat('test@-wellcode.com')
+    validateEmailFormat('test@wellcode-.com')
+
+    // other ASCII printable characters
+    validateEmailFormat('test@!#$%&*+/=?^_`{|}~.com')
+  })
+
+  it('Should not create a prospect with existing phone number', () => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // fill the text fields for email, name, and phone
+    cy.get('input[id="mail"]').click().type('test2@wellcode.com')
+    cy.get('input[id="name"]').click().type('test name')
+    cy.get('input[id="phone"]').click().type('0707070707')
+
+    // try to create a new prospect and check for error message
+    cy.get('button[id="create"').click()
+    cy.contains('Phone number is already in use!')
+  })
+
+  it('Should not create a prospect with invalid phone number format', () => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // fill the text fields for email and name
+    cy.get('input[id="mail"]').click().type('test2@wellcode.com')
+    cy.get('input[id="name"]').click().type('test name')
+
+    // should not have less than 10 digits
+    cy.get('input[id="phone"]').click().type('12345')
+
+    // try to create a new prospect and check for error message
+    cy.get('button[id="create"').click()
+    cy.contains('Invalid phone number format!')
+
+    // should not have more than 10 digits
+    cy.get('input[id="phone"]').click().type('678910')
+    cy.get('button[id="create"').click()
+    cy.contains('Invalid phone number format!')
+
+    // should accept other phone prefix than '07'
+    cy.get('input[id="phone"]').clear().type('0333333333')
+    cy.get('button[id="create"').click()
+    cy.contains('Prospect successfully created!')
+  })
+
+  it('Should not create a prospect with missing phone number or email', () => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // open the slide pane to create a prospect
+    cy.get('button[id="create-prospect"').click()
+
+    // the create button should be disabled
+    cy.get('button[id="create"').should('be.disabled')
+
+    // fill only the text field for email
+    cy.get('input[id="mail"]').click().type('test2@wellcode.com')
+    cy.get('button[id="create"').should('be.disabled')
+
+    // fill only the text field for phone number
+    cy.get('input[id="mail"]').clear()
+    cy.get('input[id="phone"]').click().type('0707070777')
+    cy.get('button[id="create"').should('be.disabled')
   })
 })

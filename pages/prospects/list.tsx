@@ -1,3 +1,4 @@
+import CreateProspect from '../../components/prospects/CreateProspect'
 import getMorePageData from '../../lib/get-more-page-data'
 import Profile from '../../components/prospects/Profile'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -20,6 +21,7 @@ function ProspectList() {
 
   return (
     <>
+      <CreateProspect/>
       <InfiniteScroll
         dataLength={prospects.length}
         next={() => {getMorePageData(getMorePageDataParams)}}
