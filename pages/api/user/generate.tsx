@@ -1,4 +1,4 @@
-import hasPermissions from '../../../lib/has_permissions'
+import hasPermissions from '../../../lib/has-permissions'
 import prisma from '../../../lib/prisma'
 
 const bcrypt = require('bcrypt')

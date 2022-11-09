@@ -11,7 +11,7 @@ export default async function getMorePageData(getDataParams) {
    *  - resultSource -> needed to know what data type we are loading
    */
 
-  fetch('/api/utils/get_paginated_data?skip=' + getDataParams.data.length + 
+  fetch('/api/utils/get-paginated-data?skip=' + getDataParams.data.length + 
   '&resultSource=' + getDataParams.resultSource + 
   '&orderBy=' + getDataParams.orderBy +
   '&sortOrder=' + getDataParams.sortOrder, {

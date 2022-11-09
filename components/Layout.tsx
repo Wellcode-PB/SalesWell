@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import NavBar from './navbar'
+import NavBar from './Navbar'
 
 function Layout({ children }) {
   return <Box sx={{ flexGrow: 1 }}>
