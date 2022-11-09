@@ -1,5 +1,5 @@
-import getMorePageData from '../../lib/get_more_page_data'
-import Profile from '../../components/prospects/profile'
+import getMorePageData from '../../lib/get-more-page-data'
+import Profile from '../../components/prospects/Profile'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useEffect, useState } from 'react'
 

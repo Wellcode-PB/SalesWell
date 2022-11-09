@@ -22,7 +22,7 @@ function BookingStatusDropdown({bookingId, bookingStatus, statusesTypes}) {
         bookingStatus: statusId
       }
       setBookingStatusId(statusId)
-      fetch('/api/booking/set_status_id', {
+      fetch('/api/booking/set-status-id', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingDetails),

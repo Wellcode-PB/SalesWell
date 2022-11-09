@@ -1,8 +1,8 @@
-import BookingCard from '../../components/booking/bookingCard'
-import BookingsFilter from '../../components/booking/bookingsFilter'
+import BookingCard from '../../components/booking/BookingCard'
+import BookingsFilter from '../../components/booking/BookingsFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import getBookingStatusTypes from '../../lib/get_booking_status_types'
-import getMorePageData from '../../lib/get_more_page_data'
+import getBookingStatusTypes from '../../lib/get-booking-status-types'
+import getMorePageData from '../../lib/get-more-page-data'
 
 import { useEffect, useState } from 'react'
 
