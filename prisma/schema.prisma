@@ -39,6 +39,8 @@ model prospects {
   id       Int        @id @default(autoincrement())
   name     String? 
   mail     String     @unique
+  fb       String?
+  phone    String     @unique
 }
 
 model team_members {

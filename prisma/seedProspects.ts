@@ -7,7 +7,9 @@ for (let i = 1; i <= 20; ++i) {
   prospectsList.push({
     id: i,
     name: 'Prospect ' + i,
-    mail: 'booking' + i + '@gmail.com'
+    mail: 'booking' + i + '@gmail.com',
+    fb: 'facebook' + i,
+    phone: '077777777' + i
   })
 }
 prospectsList.forEach(async (prospect) => {
