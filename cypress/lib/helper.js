@@ -87,3 +87,10 @@ export function sortBookingsDataTest(bookingsDataTest, sortBy, sortOrder) {
   
   return bookingsDataTest
 }
+
+export function validateEmailFormat(email) {
+  cy.get('input[id="mail"]').clear()
+  cy.get('input[id="mail"]').click().type(email)
+  cy.get('button[id="create"').click()
+  cy.contains('Invalid email adress!')
+}

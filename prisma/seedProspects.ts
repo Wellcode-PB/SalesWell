@@ -2,18 +2,18 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const prospectsList = []
-for (let i = 1; i <= 20; ++i) {
-  prospectsList.push({
-    id: i,
-    name: 'Prospect ' + i,
-    mail: 'booking' + i + '@gmail.com',
-    fb: 'facebook' + i,
-    phone: '077777777' + i
-  })
+// This function will create 20 prospects for testing the list of prospects
+async function addProspectsList() {
+  // use a simple for loop to make sure the prospects are
+  // going to be inserted in this exact order (from 1 to 20)
+  for (let index = 1; index <= 20; ++index) {
+    await prisma.prospects.create({ data: {
+      name: 'Prospect ' + index,
+      mail: 'booking' + index + '@gmail.com',
+      fb: 'facebook' + index,
+      phone: '077777777' + index,
+    } })
+  }
 }
-prospectsList.forEach(async (prospect) => {
-  await prisma.prospects.create({
-    data: prospect
-  })
-})
+
+addProspectsList()
