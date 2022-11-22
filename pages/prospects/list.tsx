@@ -1,6 +1,6 @@
 import getMorePageData from '../../lib/get-more-page-data'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Profile from '../../components/prospects/Profile'
+import ProspectCard from '../../components/prospects/ProspectCard'
 import SearchProspect from '../../components/prospects/SearchProspect'
 import { useEffect, useState } from 'react'
 
@@ -30,7 +30,7 @@ function ProspectList() {
         endMessage={<h4>Nothing more to show</h4>}
       >
         {prospects.map((data) => (
-          <Profile key={data.id} prospect={data}/>
+          <ProspectCard key={data.id} prospect={data}/>
         ))}
       </InfiniteScroll>
     </>
