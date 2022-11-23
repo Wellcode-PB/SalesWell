@@ -11,7 +11,7 @@ function CreateProspect() {
     mail: "", name: "", fb: "", phone: ""
   })
 
-  function createProspect() {
+  function saveProspect() {
     fetch('/api/prospect/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,7 +72,7 @@ function CreateProspect() {
           <div>
             <Button id="create" variant="contained" 
                 disabled={(!prospect.mail || !prospect.name || !prospect.phone)}
-                onClick={createProspect}>
+                onClick={saveProspect}>
               Create
             </Button>
             <Button id="cancel" variant="contained"

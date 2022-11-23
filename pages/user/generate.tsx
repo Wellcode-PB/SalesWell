@@ -12,7 +12,7 @@ function GenerateUser() {
     password: ""
   });
 
-  function generateUser() {
+  function saveUser() {
     fetch('/api/user/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,7 +63,7 @@ function GenerateUser() {
           onChange={handleChange}/>
       </div>
       <div>
-        <Button variant="contained" onClick={generateUser} id="generate">
+        <Button variant="contained" onClick={saveUser} id="generate">
           Generate
         </Button>
       </div>

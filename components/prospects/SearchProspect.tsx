@@ -6,7 +6,7 @@ import { useState } from 'react'
 function SearchProspect({ setProspectsList }) {
   const [hasResults, setHasResults] = useState(null)
 
-  function searchProspect(event) {
+  function getSearchResults(event) {
     const searchInput = event.target.value
 
     fetch('/api/prospect/search?input=' + searchInput, {
@@ -31,7 +31,7 @@ function SearchProspect({ setProspectsList }) {
       <Paper sx={{ display: 'flex', margin: '2% 10% 2% 10%' }} >
         <IconButton><SearchIcon /></IconButton>
         <InputBase id="search-bar" sx={{ flex: 1 }}
-            placeholder="Search Prospect" onChange={searchProspect} />
+            placeholder="Search Prospect" onChange={getSearchResults} />
         <Divider sx={{ height: 'auto', m: 0.5 }} orientation="vertical" />
         <CreateProspect />
       </Paper>
