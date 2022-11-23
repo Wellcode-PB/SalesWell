@@ -1,4 +1,5 @@
-import { Alert, Box, Button, TextField } from '@mui/material'
+import AddButtonIcon from '@mui/icons-material/AddCircle'
+import { Alert, Box, Button, IconButton, TextField } from '@mui/material'
 import SlidingPane from "react-sliding-pane"
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { useState } from 'react'
@@ -42,10 +43,10 @@ function CreateProspect() {
 
   return (
     <>
-      <Button id="create-prospect" variant="contained"
+      <IconButton id="create-prospect"
           onClick={() => setPaneState({ isOpen: true })}>
-        Create Prospect
-      </Button>
+        <AddButtonIcon />
+      </IconButton>
       <SlidingPane
         isOpen={paneState.isOpen}
         title="Create a new prospect"

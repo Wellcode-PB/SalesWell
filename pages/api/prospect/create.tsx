@@ -3,10 +3,6 @@ import validateEmail from 'email-validator'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-// use this PNF (Phone Number Format) constant
-// to format the phone number
-const PNF_NATIONAL = 2
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   // get the prospect's email and phone number
   // and trim any new line characters and spaces
@@ -26,11 +22,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   // parse number with RO country code and keep raw input
   const phoneNumber = phoneUtil.parseAndKeepRawInput(prospectPhone, 'RO')
-  const formattedNumber = phoneUtil.format(phoneNumber, PNF_NATIONAL)
 
   // if the prospect's phone number already exists 
   // or has invalid format, return an error
-  if (await isPhoneInUse(formattedNumber)) {
+  if (await isPhoneInUse(prospectPhone)) {
     return await res.status(400)
       .send({ error: 'Phone number is already in use!' })
   } else if (!phoneUtil.isValidNumber(phoneNumber)) {
@@ -43,7 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     name: req.body.name,
     mail: prospectEmail,
     fb: req.body.fb,
-    phone: formattedNumber
+    phone: prospectPhone
   } })
 
   // return a success status

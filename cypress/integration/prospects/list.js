@@ -196,3 +196,111 @@ describe('Create prospect', () => {
     cy.get('button[id="create"').should('be.disabled')
   })
 })
+
+describe('Search prospect', () => {
+  it('Should have permissions when logged in as user', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search prospect by email
+    cy.get('input[id="search-bar"').click().type('test@wellcode.com')
+
+    cy.contains('test name')
+    cy.contains('test@wellcode.com')
+    cy.contains('Prospect 1').should('not.exist')
+
+    // search prospect by name
+    cy.get('input[id="search-bar"').clear().click().type('test name')
+
+    cy.contains('test name')
+    cy.contains('test@wellcode.com')
+    cy.contains('Prospect 1').should('not.exist')
+
+    // search prospect by phone
+    cy.get('input[id="search-bar"').clear().click().type('0707070707')
+
+    cy.contains('test name')
+    cy.contains('test@wellcode.com')
+    cy.contains('Prospect 1').should('not.exist')
+  })
+
+  it('Should display all prospects that match the search by name', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search prospect by name
+    cy.get('input[id="search-bar"').click().type('Prospect')
+
+    cy.contains('Prospect 1')
+    cy.scrollTo('bottom').contains('Prospect 10')
+    cy.scrollTo('bottom').contains('Prospect 20')
+  })
+
+  it('Should display all prospects that match the search by email', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search prospect by email
+    cy.get('input[id="search-bar"').click().type('booking1')
+
+    cy.contains('Prospect 1')
+    cy.contains('booking1@gmail.com')
+    cy.scrollTo('bottom').scrollTo('bottom').contains('Prospect 19')
+    cy.contains('booking19@gmail.com')
+  })
+
+  it('Should display all prospects that match the search by phone', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search prospect by phone number
+    cy.get('input[id="search-bar"').click().type('07777')
+
+    cy.contains('Prospect 1')
+    cy.scrollTo('bottom').contains('Prospect 10')
+    cy.scrollTo('bottom').contains('Prospect 20')
+  })
+
+  it('Should search in case insensitive', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search prospect by name
+    cy.get('input[id="search-bar"').click().type('proSPecT 12')
+
+    cy.contains('Prospect 12')
+    cy.contains('booking12@gmail.com')
+
+    // search prospect by email
+    cy.get('input[id="search-bar"').clear()
+    cy.get('input[id="search-bar"').click().type('BOOKing4@Gmail.com')
+
+    cy.contains('Prospect 4')
+    cy.contains('booking4@gmail.com')
+  })
+
+  it('Should display message if no search results', () => {
+    cy.login('normal@example.com', 'password')
+    cy.visit('http://localhost:3000/prospects/list')
+
+    // search a non existing prospect by name
+    cy.get('input[id="search-bar"').click()
+      .type('non existing name{enter}')
+
+    cy.contains('No results!')
+
+    // search a non existing prospect by email
+    cy.get('input[id="search-bar"').clear()
+    cy.get('input[id="search-bar"').click()
+      .type('non_existing@email.com{enter}')
+
+    cy.contains('No results!')
+
+    // search a non existing prospect by phone
+    cy.get('input[id="search-bar"').clear()
+    cy.get('input[id="search-bar"').click()
+      .type('0000000000{enter}')
+
+    cy.contains('No results!')
+  })
+})
