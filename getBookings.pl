@@ -44,7 +44,10 @@ sub get_event_details {
   my $link = shift;
   my %event;
   my $response = decode_json(send_request($link));
+  # TODO: Create config file with all the excluded meetings
   return if $response->{resource}->{event_type} eq 'https://api.calendly.com/event_types/FEGN64Z5XYW3CYM2'; # mock interviews
+  return if $response->{resource}->{event_type} eq 'https://api.calendly.com/event_types/CDAN2254R5U3CADA'; # Petru 1hr meeting
+  return if $response->{resource}->{event_type} eq 'https://api.calendly.com/event_types/ACBMZ7Y2R6TTZ747'; # Petru 30min meeting
 
   $event{createdAt} = $response->{resource}->{created_at};
   $event{startsAt} = $response->{resource}->{start_time};
