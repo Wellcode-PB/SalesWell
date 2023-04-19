@@ -58,12 +58,18 @@ function CreateProspect() {
       >
         <Box component="form" sx={{
             '& .MuiTextField-root': { m: 1, width: '97%' },
-            '& button': { m: 1 }
+            '& button': { m: 1 },
           }}
         >
+          <Box sx={{m: 1, height: "100%", width: "97%"}}>
           { message ?
-            <Alert severity={message.severity}>{message.text}</Alert>
+            <Alert 
+            sx={{
+              minWidth: 0
+            }}
+             severity={message.severity}>{message.text}</Alert>
             : null }
+          </Box>
           <br/>
           <TextField id="mail" label="Email" onChange={handleChange}/>
           <TextField id="name" label="Full Name" onChange={handleChange}/>

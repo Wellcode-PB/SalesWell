@@ -46,7 +46,7 @@ function GenerateUser() {
   return <Box component="form" 
       sx={{
         '& .MuiTextField-root': { m: 1, width: '100%' },
-        '& button': { m: 1 }
+        '& button': { m: 1 },
       }}
     >
       { message ? 
