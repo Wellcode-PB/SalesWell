@@ -61,15 +61,10 @@ function CreateProspect() {
             '& button': { m: 1 },
           }}
         >
-          <Box sx={{m: 1, height: "100%", width: "97%"}}>
           { message ?
             <Alert 
-            sx={{
-              minWidth: 0
-            }}
              severity={message.severity}>{message.text}</Alert>
             : null }
-          </Box>
           <br/>
           <TextField id="mail" label="Email" onChange={handleChange}/>
           <TextField id="name" label="Full Name" onChange={handleChange}/>
