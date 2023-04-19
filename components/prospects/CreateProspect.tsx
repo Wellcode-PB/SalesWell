@@ -62,8 +62,7 @@ function CreateProspect() {
           }}
         >
           { message ?
-            <Alert 
-             severity={message.severity}>{message.text}</Alert>
+            <Alert severity={message.severity}>{message.text}</Alert>
             : null }
           <br/>
           <TextField id="mail" label="Email" onChange={handleChange}/>
