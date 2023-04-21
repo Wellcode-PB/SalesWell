@@ -46,12 +46,14 @@ function GenerateUser() {
   return <Box component="form" 
       sx={{
         '& .MuiTextField-root': { m: 1, width: '100%' },
-        '& button': { m: 1 }
+        '& button': { m: 1 },
       }}
     >
+      <Box sx={{ m:1, width: "100%"}}>
       { message ? 
         <Alert severity={message.severity}>{message.text}</Alert>
         : null }
+      </Box>
       <div>
         <TextField id="mail" label="email" onChange={handleChange}/>
       </div>
