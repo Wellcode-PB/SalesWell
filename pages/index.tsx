@@ -1,15 +1,16 @@
-import { signIn, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 function HomePage() {
   const { data: session } = useSession()
 
-  return <div>
-    Welcome to SalesWell{session ? ' ' + session.user.name : ''}!
-    <br />
-    { !session ? 
-      <button onClick={() => signIn()}>Sign in with Email</button> 
-      : null }
-  </div>
+    return <div style={{
+      fontFamily: 'Arial',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <h1>Welcome{session ? ' back, ' + session.user.name + '!' : ' to SalesWell'}</h1>
+    </div>
 }
 
 export default HomePage
