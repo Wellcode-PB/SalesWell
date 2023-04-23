@@ -11,7 +11,7 @@ describe('User actions', () => {
     cy.get('button').click()
 
     cy.url().should('eq', 'http://localhost:3000/')
-    cy.contains('Welcome to SalesWell normal user')
+    cy.contains('Welcome back, normal user')
     cy.contains('Logout')
   })
 
@@ -20,7 +20,7 @@ describe('User actions', () => {
 
     cy.contains('Login')
     cy.contains('Logout').should('not.exist')
-    cy.contains('Welcome to SalesWell normal user').should('not.exist')
+    cy.contains('Welcome back, normal user').should('not.exist')
   })
 
   it('Should not login with incorrect user / password combination', () => {
