@@ -10,3 +10,7 @@ Cypress.Commands.add('login', (email, password) => {
   cy.get('button').click()
   cy.contains('Logout')
 })
+
+Cypress.Commands.add('doneTesting', (model) => {
+  cy.task('cy:doneTesting', model)
+})

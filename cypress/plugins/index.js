@@ -12,6 +12,8 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+import { PrismaClient } from '@prisma/client'
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -20,12 +22,17 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('task', {
+    'cy:doneTesting': async (model) => {
+      const prisma = new PrismaClient()
+      await prisma[model].deleteMany({ })
+      return null
+    },
     'db:seedBookings': () => {
-      const seed = require('../../prisma/seedBookings.ts')
+      const seed = require('../seeds/bookings/seedBookingsList.ts')
       return null
     },
     'db:seedProspects': () => {
-      const seed = require('../../prisma/seedProspects.ts')
+      const seed = require('../seeds/prospects/seedProspectsList.ts')
       return null
     }
   })
