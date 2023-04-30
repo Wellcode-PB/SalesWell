@@ -270,6 +270,7 @@ describe('Search prospect', () => {
 
     cy.contains('Prospect 12')
     cy.contains('booking12@gmail.com')
+    cy.contains('077777777')
 
     // search prospect by email
     cy.get('input[id="search-bar"').clear()
@@ -277,6 +278,7 @@ describe('Search prospect', () => {
 
     cy.contains('Prospect 4')
     cy.contains('booking4@gmail.com')
+    cy.contains('077777777')
   })
 
   it('Should display message if no search results', () => {

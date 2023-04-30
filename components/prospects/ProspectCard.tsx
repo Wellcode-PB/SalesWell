@@ -13,6 +13,7 @@ function ProspectCard({ prospect }) {
         <CardContent id={'prospect-' + prospect.id}>
           <h2>{prospect.name}</h2>
           <p>{prospect.mail}</p>
+          <p>{prospect.phone}</p>
         </CardContent>
       </Card>
     </CardActionArea>
