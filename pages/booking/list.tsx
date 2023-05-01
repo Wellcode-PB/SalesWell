@@ -1,15 +1,25 @@
 import BookingCard from '../../components/booking/BookingCard'
 import BookingsFilter from '../../components/booking/BookingsFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import getBookingStatusTypes from '../../lib/get-booking-status-types'
+// import getBookingStatusTypes from '../../lib/get-booking-status-types'
 import getMorePageData from '../../lib/get-more-page-data'
+import prisma from '../../lib/prisma'
 
 import { useEffect, useState } from 'react'
 
-function BookingList() {
+export async function getServerSideProps() {
+  const statusTypes = await prisma.booking_status.findMany()
+  return { 
+    props: { 
+      statusTypesData: JSON.parse(JSON.stringify(statusTypes)) 
+    } 
+  };
+}
+
+function BookingList({statusTypesData}) {
   const [bookings, setBookings] = useState([])
   const [hasMore, setHasMore] = useState(true)
-  const [statusesTypes, setStatusTypes] = useState()
+  const [statusesTypes, setStatusesTypes] = useState(statusTypesData)
   const [orderBy, setOrderBy] = useState('default')
   const [sortOrder, setSortOrder] = useState('default')
 
@@ -23,10 +33,11 @@ function BookingList() {
     setSortOrder: setSortOrder,
     sortOrder: sortOrder
   }
-
+  
   useEffect(() => {
     getMorePageData(getMorePageDataParams)
-    getBookingStatusTypes(setStatusTypes)
+    //getBookingStatusTypes(setStatusTypes)
+    setStatusesTypes(statusesTypes)
   }, [orderBy, sortOrder])
 
   return (
