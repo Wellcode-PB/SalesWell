@@ -1,7 +1,6 @@
 import BookingCard from '../../components/booking/BookingCard'
 import BookingsFilter from '../../components/booking/BookingsFilter'
 import InfiniteScroll from 'react-infinite-scroll-component'
-// import getBookingStatusTypes from '../../lib/get-booking-status-types'
 import getMorePageData from '../../lib/get-more-page-data'
 import prisma from '../../lib/prisma'
 
@@ -36,7 +35,6 @@ function BookingList({statusTypesData}) {
   
   useEffect(() => {
     getMorePageData(getMorePageDataParams)
-    //getBookingStatusTypes(setStatusTypes)
     setStatusesTypes(statusesTypes)
   }, [orderBy, sortOrder])
 
