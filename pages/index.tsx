@@ -1,15 +1,15 @@
-import { signIn, useSession } from "next-auth/react"
+import { useSession } from 'next-auth/react'
+import { Typography } from '@mui/material'
 
 function HomePage() {
   const { data: session } = useSession()
 
-  return <div>
-    Welcome to SalesWell{session ? ' ' + session.user.name : ''}!
-    <br />
-    { !session ? 
-      <button onClick={() => signIn()}>Sign in with Email</button> 
-      : null }
-  </div>
+  return (
+    <Typography variant="h4" style={{ textAlign: 'center' }}>
+      Welcome
+      { session ? ' back, ' + session.user.name + '!' : ' to SalesWell' }
+    </Typography>
+  )
 }
 
 export default HomePage
