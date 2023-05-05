@@ -1,5 +1,7 @@
 import { Card, Divider, Link, Typography } from '@mui/material'
 import OpenInNewWindowIcon from '@mui/icons-material/OpenInNew';
+import ProfileActions from './ProfileActions';
+import Router from 'next/router';
 
 // use this PNF (Phone Number Format) constant
 // to format the phone number to a national format
@@ -15,8 +17,18 @@ function ProfileInfo({ prospect }) {
     prospect.phone = phoneUtil.format(phoneNumber, PNF_NATIONAL)
   }
 
+  function deleteProfile() {
+    // TODO: Delete prospect from the DB as well
+    Router.push('/prospects/list')
+  }
+
   return (
     <>
+      <Typography sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <ProfileActions id={prospect.id} name={prospect.name} options={[
+          { id: 0, label: 'Delete', action: deleteProfile },
+        ]} />
+      </Typography>
       <img src="/img/prospect.png" style={{ margin: 'auto', 
           display: 'block', width: '65%', height: 'auto' }} />
       <Typography gutterBottom variant="h6" 

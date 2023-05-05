@@ -24,4 +24,63 @@ describe('Prospects profile info', () => {
     cy.get('.error-title').contains('User not found')
     cy.get('.error-message').contains('The user you are searching for does not exist.')
   })
-})
+
+  it(`Cancel deletion on the prospect dialog`, () => {
+    cy.login('normal@example.com', 'password');
+    cy.visit('http://localhost:3000/prospects/list');
+    
+    // open the prospect profile
+    cy.get('div[id="prospect-1"').click();
+
+    // open the profile menu and check if it is visible
+    cy.get('#profile-action').click(); 
+    cy.get('#delete-button').should('be.visible');
+
+    // click the first and only item in the main menu,
+    // open the modal window, check if it is visible and cancel the action
+    cy.get('ul li').should('have.length', 1);
+    cy.get('#delete-button').click();
+    cy.get('#modal-confirm').should('be.visible');
+    cy.get('#confirm-action-message')
+      .should('be.visible')
+      .contains('Are you sure you want to delete Prospect 1?');
+    cy.get('#cancel-action').should('be.visible');
+    cy.get('#cancel-action').click();
+    cy.get('#modal-confirm').should('not.exist');
+    cy.go('back');
+
+    // check that the prospect still exists in the list
+    cy.get('div[id="prospect-1"]').should('exist');
+  })
+
+  it(`User should be deleted after dialog confirm`, () => {
+    cy.login('normal@example.com', 'password');
+    cy.visit('http://localhost:3000/prospects/list');
+
+    // open the prospect profile
+    cy.get('div[id="prospect-1"').click();
+
+    // open the profile menu and check if it is visible
+    cy.get('#profile-action').click();
+    cy.get('#delete-button').should('be.visible');
+
+    // click the first and only item in the main menu,
+    // open the modal window, check if it is visible and confirm the action
+    cy.get('ul li').should('have.length', 1);
+    cy.get('#delete-button').click();
+    cy.get('#modal-confirm').should('be.visible');
+    cy.get('#confirm-action-message')
+      .should('be.visible')
+      .contains('Are you sure you want to delete Prospect 1?');
+    cy.get('#confirm-action').should('be.visible');
+    cy.get('#confirm-action').click();
+
+    // check the URL
+    cy.url().should('eq', 'http://localhost:3000/prospects/list');
+
+    // check that the prospect still exists in the list
+    // TODO: update check after prospect is deleted from DB
+    cy.get('div[id="prospect-1"]').should('exist');
+  })
+});
+
