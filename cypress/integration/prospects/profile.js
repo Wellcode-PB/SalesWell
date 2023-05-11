@@ -17,4 +17,11 @@ describe('Prospects profile info', () => {
       cy.go('back')
     }
   })
+  
+  it('Should load CustomError component when user not found', () => {
+    const index = Math.floor(Math.random() * 25) + 25
+    cy.visit(`http://localhost:3000/prospects/profile/${index}`)
+    cy.get('.error-title').contains('User not found')
+    cy.get('.error-message').contains('The user you are searching for does not exist.')
+  })
 })
