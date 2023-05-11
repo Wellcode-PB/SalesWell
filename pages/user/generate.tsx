@@ -1,10 +1,14 @@
-import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import CustomError from '../../components/CustomError'
+
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
 function GenerateUser() {
+  const { data: session } = useSession()
   const [message, setMessage] = useState(null) 
   const [user, setUser] = useState({
     mail: "",
@@ -16,7 +20,7 @@ function GenerateUser() {
     fetch('/api/user/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
+      body: JSON.stringify(user)
     })
     .then(response => response.json())
     .then((response) => {
@@ -31,8 +35,7 @@ function GenerateUser() {
           text: 'User successfully created!'
         })
       }
-    })
-    
+    }) 
   }
 
   function handleChange(event) {
@@ -40,29 +43,37 @@ function GenerateUser() {
     setUser({
       ...user,
       [event.target.id]: value
-    });
+    })
   }
 
-  return <Box component="form" 
+  if (!session || session.role !== 'ADMIN') {
+    return (
+      <CustomError
+        title='Restricted'
+        message='You do not have enough permissions for this action!' />
+    )
+  }
+
+  return (
+    <Box component="form"
       sx={{
         '& .MuiTextField-root': { m: 1, width: '100%' },
         '& button': { m: 1 }
-      }}
-    >
-      <Box sx={{margin: 1, width: "100%"}}>
-        { message ? 
+      }}>
+      <Box sx={{ margin: 1, width: "100%" }}>
+        { message ?
           <Alert severity={message.severity}>{message.text}</Alert>
-          : null }
+            : null }
       </Box>
       <div>
-        <TextField id="mail" label="email" onChange={handleChange}/>
+        <TextField id="mail" label="email" onChange={handleChange} />
       </div>
       <div>
-      <TextField id="name" label="name" onChange={handleChange}/>
+        <TextField id="name" label="name" onChange={handleChange} />
       </div>
       <div>
-        <TextField id="password" label="Password" type="password" 
-          onChange={handleChange}/>
+        <TextField id="password" label="Password" type="password"
+          onChange={handleChange} />
       </div>
       <div>
         <Button variant="contained" onClick={saveUser} id="generate">
@@ -70,6 +81,7 @@ function GenerateUser() {
         </Button>
       </div>
     </Box>
+  )
 }
 
 export default GenerateUser
