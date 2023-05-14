@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Divider, Grid, Paper, Typography } from '@mui/material'
+import { Divider, Grid, Paper, Typography, Box, Button } from '@mui/material'
 import ProfileInfo from '../../../components/prospects/ProfileInfo';
+import Modal from '../../../components/prospects/CreateProspectNotes';
 
 // use this function to get the 'id' parameter from the url
 export async function getServerSideProps({ params }) {
@@ -24,6 +25,8 @@ function ProspectProfile(props) {
     })
   }, [])
 
+  const [openModal, setOpenModal] = useState(false);
+
 
   return (
     <Paper sx={{ p: 1, margin: '2%' }}>
@@ -36,7 +39,18 @@ function ProspectProfile(props) {
         </Grid>
         <Grid item xs>
           <Typography gutterBottom variant="h6">Notes</Typography>
-          <Divider sx={{ width: 'auto' }} orientation="horizontal" />
+          <Divider sx={{ width: 'auto' }} orientation="horizontal" />  
+          <Box display="flex">
+            <Button variant="contained" sx={{
+              position: 'absolute',
+              top: '92px',
+              right: '400px' 
+              }} onClick={()=> {
+              setOpenModal(true);
+            }}>create note</Button>            
+            <br />
+            {openModal && <Modal prospectId={props.id} setCloseModal={setOpenModal}/>}
+          </Box>
         </Grid>
       </Grid>
     </Paper>
