@@ -36,11 +36,12 @@ model booking_status {
 }
 
 model prospects {
-  id       Int        @id @default(autoincrement())
+  id       Int            @id @default(autoincrement())
   name     String? 
-  mail     String     @unique
+  mail     String         @unique
   fb       String?
-  phone    String     @unique
+  phone    String         @unique
+  notes    notes[]
 }
 
 model team_members {
@@ -54,4 +55,11 @@ model team_members {
 enum Role {
   USER
   ADMIN
+}
+
+model notes{
+  id         Int       @id @default(autoincrement())
+  note       String
+  prospect   prospects @relation(fields: [prospectId], references: [id])
+  prospectId Int
 }
