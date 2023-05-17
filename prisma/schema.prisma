@@ -36,11 +36,19 @@ model booking_status {
 }
 
 model prospects {
-  id       Int        @id @default(autoincrement())
+  id       Int            @id @default(autoincrement())
   name     String? 
-  mail     String     @unique
+  mail     String         @unique
   fb       String?
-  phone    String     @unique
+  phone    String         @unique
+  notes    notes[]
+}
+
+model notes{
+  id         Int       @id @default(autoincrement())
+  note       String
+  prospect   prospects @relation(fields: [prospectId], references: [id])
+  prospectId Int
 }
 
 model team_members {
