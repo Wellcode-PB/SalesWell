@@ -9,7 +9,7 @@ async function hasPermissions(req: NextApiRequest, res: NextApiResponse) {
   // Admin routes are restricted
   if (req.url === '/api/user/generate') {
     res.status(403)
-      .send({ error: 'You do not have enough permissions for this action!'})
+      .send({ error: 'You do not have enough permissions for this action!' })
     return false
   }
 }
