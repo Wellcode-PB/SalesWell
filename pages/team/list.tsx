@@ -1,18 +1,17 @@
 import getMorePageData from '../../lib/get-more-page-data'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import InfoCard from '../../components/InfoCard'
-import SearchProspect from '../../components/prospects/SearchProspect'
 import { useEffect, useState } from 'react'
 
-function ProspectList() {
-  const [prospects, setProspects] = useState([])
+function TeamMembersList() {
+  const [teamMembers, setTeamMembers] = useState([])
   const [hasMore, setHasMore] = useState(true)
 
   const getMorePageDataParams = {
-    data: prospects,
-    setData: setProspects,
+    data: teamMembers,
+    setData: setTeamMembers,
     setHasMore: setHasMore,
-    resultSource: "prospects"
+    resultSource: "team_members"
   }
 
   useEffect(() => {
@@ -21,25 +20,24 @@ function ProspectList() {
 
   return (
     <>
-      <SearchProspect setProspectsList={setProspects}/>
       <InfiniteScroll
-        dataLength={prospects.length}
+        dataLength={teamMembers.length}
         next={() => {getMorePageData(getMorePageDataParams)}}
         hasMore={hasMore}
         loader={<h3> Loading...</h3>}
         endMessage={<h4>Nothing more to show</h4>}
       >
-        {prospects.map((data) => (
+        {teamMembers.map((data) => (
           <InfoCard 
-            key={data.id} 
-            userInfo={[data.id, data.name, data.mail, data.phone]} 
-            onClickRoute={'/prospects/profile/'}
-            idPrefix={'prospect-'}
-            />
+            key={data.mail} 
+            userInfo={[data.id, data.name, data.mail, data.role]} 
+            onClickRoute={null} 
+            idPrefix={'member-'}
+          />
         ))}
       </InfiniteScroll>
     </>
   )
 }
 
-export default ProspectList
+export default TeamMembersList
