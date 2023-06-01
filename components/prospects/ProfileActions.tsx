@@ -28,7 +28,7 @@ function ProfileActions({ id, name, options }) {
   }
 
   function onConfirmModel() {
-    selectedOption.action();
+    selectedOption.action(id);
   }
 
   return (

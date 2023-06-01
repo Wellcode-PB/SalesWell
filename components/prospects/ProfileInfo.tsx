@@ -17,9 +17,13 @@ function ProfileInfo({ prospect }) {
     prospect.phone = phoneUtil.format(phoneNumber, PNF_NATIONAL)
   }
 
-  function deleteProfile() {
-    // TODO: Delete prospect from the DB as well
-    Router.push('/prospects/list')
+  function deleteProfile(id) {
+    fetch(`/api/prospect/${id}`, {
+      method: 'DELETE',
+    })
+    .then(() => {
+      Router.replace('/prospects/list')
+    })
   }
 
   return (
