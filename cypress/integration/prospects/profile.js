@@ -78,9 +78,8 @@ describe('Prospects profile info', () => {
     // check the URL
     cy.url().should('eq', 'http://localhost:3000/prospects/list');
 
-    // check that the prospect still exists in the list
-    // TODO: update check after prospect is deleted from DB
-    cy.get('div[id="prospect-1"]').should('exist');
+    // ensures the prospect does not exist in the current list
+    cy.get('div[id="prospect-1"]').should('not.exist');
   })
 });
 
