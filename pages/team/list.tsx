@@ -1,6 +1,6 @@
 import getMorePageData from '../../lib/get-more-page-data'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import InfoCard from '../../components/InfoCard'
+import TeamMemberCard from '../../components/team-members/TeamMemberCard'
 import { useEffect, useState } from 'react'
 
 function TeamMembersList() {
@@ -28,11 +28,9 @@ function TeamMembersList() {
         endMessage={<h4>Nothing more to show</h4>}
       >
         {teamMembers.map((data) => (
-          <InfoCard 
+          <TeamMemberCard 
             key={data.mail} 
-            userInfo={[data.id, data.name, data.mail, data.role]} 
-            onClickRoute={null} 
-            idPrefix={'member-'}
+            teamMember={data} 
           />
         ))}
       </InfiniteScroll>
