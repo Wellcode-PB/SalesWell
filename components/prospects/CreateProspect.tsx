@@ -3,6 +3,7 @@ import { Alert, Box, Button, IconButton, TextField } from '@mui/material'
 import SlidingPane from "react-sliding-pane"
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { useState } from 'react'
+import Router from 'next/router'
 
 function CreateProspect() {
   const [message, setMessage] = useState(null)
@@ -29,6 +30,7 @@ function CreateProspect() {
           severity: 'success',
           text: 'Prospect successfully created!'
         })
+        Router.push('/prospects/profile/' + response.id)
       }
     })
   }

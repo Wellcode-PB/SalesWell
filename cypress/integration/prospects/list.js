@@ -72,12 +72,19 @@ describe('Create prospect', () => {
     cy.get('button[id="create"').click()
     cy.contains('Prospect successfully created!')
 
-    // reload the page and check if the newly created prospect appears in the
-    // list, also we need to scroll all the way down 3 times to make the 21st
-    // prospect visible
-    cy.reload()
+    // check if the user is directed to the newly created prospect
+    cy.url().should('eq', 'http://localhost:3000/prospects/profile/21')
+    cy.contains('test@wellcode.com')
+    cy.contains("Notes")
+
+    // should go to the prospects list and scroll all the way down 3 times
+    // to check if the newly created prospect appears in the list
+    cy.contains('Prospects').click()
+    cy.url().should('eq', 'http://localhost:3000/prospects/list')
     cy.scrollTo('bottom').contains('Prospect 10')
     cy.scrollTo('bottom').contains('Prospect 20')
+
+    // the newly created prospect
     cy.scrollTo('bottom').contains('test name')
     cy.contains('test@wellcode.com')
   })
