@@ -19,6 +19,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (resultSource === 'prospects') {
     query = prisma.prospects
   }
+
+  if (resultSource === 'team_members') {
+    query = prisma.team_members
+    let orderBy:any = { mail: sortOrder}
+    const data = await query.findMany({
+      orderBy: orderBy,
+      skip: skipCount,
+      take: 10
+    })
+    return res.send(data)
+  }
   
   let orderBy:any = { id: sortOrder }
   if (order === 'startsat') {
