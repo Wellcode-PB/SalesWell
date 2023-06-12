@@ -34,15 +34,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // insert the new prospect into the database 
-  await prisma.prospects.create({ data: {
+  const prospect = await prisma.prospects.create({ data: {
     name: req.body.name,
     mail: prospectEmail,
     fb: req.body.fb,
     phone: prospectPhone
   } })
 
-  // return a success status
-  return res.status(201).json({ success: true })
+  // return the success status and the prospect ID
+  return res.status(201).json({ success: true, id: prospect.id })
 }
 
 // This function will check if a prospect's email is already in use
