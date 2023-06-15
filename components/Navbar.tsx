@@ -20,6 +20,11 @@ function NavBar() {
       <div>
         { session ? 
           <>
+            <Link href="/team-members/list">
+              <Button color="inherit">
+                Team Members
+              </Button>
+            </Link>
             <Link href="/booking/list">
               <Button color="inherit">
                 Bookings
