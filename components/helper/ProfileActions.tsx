@@ -4,7 +4,7 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from 'react';
 
-function ProfileActions({ id, name, options }) {
+function ProfileActions({ id, name, options, entityType }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -54,7 +54,7 @@ function ProfileActions({ id, name, options }) {
           horizontal: 'right',
         }}
       >
-        {options.map((option) => (
+        {options.map((option) => option ? (
           <MenuItem
             sx={{ width: '17ch' }}
             id={option.label.toLowerCase() + '-button'}
@@ -62,7 +62,7 @@ function ProfileActions({ id, name, options }) {
             onClick={() => handleOptionClick(option)}
           >
             {option.label}
-          </MenuItem>))}
+          </MenuItem>) : null)}
       </Menu>
       <ConfirmModal
         open={modalOpen}
@@ -70,7 +70,7 @@ function ProfileActions({ id, name, options }) {
         message={`Are you sure you want to ${selectedOption ?
           selectedOption.label.toLowerCase() : ''} ${name}?`}
         confirmButtonName={`${selectedOption ?
-          selectedOption.label : ''} prospect`}
+          selectedOption.label : ''} ${entityType}`}
         onConfirm={onConfirmModel}
         onCancel={handleDialogClose}
       />
