@@ -1,7 +1,7 @@
 describe('Prospects profile info', () => {
   it('Should have permissions when logged in as user', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open each prospect profile by clicking on the prospect card
     for (let index = 1; index < 10; ++index) {
@@ -20,14 +20,14 @@ describe('Prospects profile info', () => {
   
   it('Should load CustomError component when user not found', () => {
     const index = Math.floor(Math.random() * 25) + 25
-    cy.visit(`http://localhost:3000/prospects/profile/${index}`)
+    cy.visit(`/prospects/profile/${index}`)
     cy.get('.error-title').contains('User not found')
     cy.get('.error-message').contains('The user you are searching for does not exist.')
   })
 
   it(`Cancel deletion on the prospect dialog`, () => {
     cy.login('normal@example.com', 'password');
-    cy.visit('http://localhost:3000/prospects/list');
+    cy.visit('/prospects/list');
     
     // open the prospect profile
     cy.get('div[id="prospect-1"').click();
@@ -55,7 +55,7 @@ describe('Prospects profile info', () => {
 
   it(`User should be deleted after dialog confirm`, () => {
     cy.login('normal@example.com', 'password');
-    cy.visit('http://localhost:3000/prospects/list');
+    cy.visit('/prospects/list');
 
     // open the prospect profile
     cy.get('div[id="prospect-1"').click();
@@ -76,7 +76,7 @@ describe('Prospects profile info', () => {
     cy.get('#confirm-action').click();
 
     // check the URL
-    cy.url().should('eq', 'http://localhost:3000/prospects/list');
+    cy.url().should('eq', '/prospects/list');
 
     // ensures the prospect does not exist in the current list
     cy.get('div[id="prospect-1"]').should('not.exist');

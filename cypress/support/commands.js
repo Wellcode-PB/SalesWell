@@ -1,6 +1,6 @@
 Cypress.Commands.add('login', (email, password) => { 
   cy.clearCookies()
-  cy.visit('http://localhost:3000/')
+  cy.visit('/')
   cy.get('button[id="login-button"]').click()
 
   cy.get('input[id="input-mail-for-credentials-provider"]').click()

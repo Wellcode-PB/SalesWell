@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 const bookingsList = []
 for (let i = 1; i <= 20; ++i) {
   bookingsList.push({
-    id:           String.fromCharCode(i + 64) + '-' + i,
+    id:           'Booking' + i,
     name:         'Booking ' + i,
     phone:        '0123456789',
     mail:         'booking' + i + '@gmail.com',
