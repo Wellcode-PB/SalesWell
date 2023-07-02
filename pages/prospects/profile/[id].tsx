@@ -1,17 +1,9 @@
-import { useEffect, useState } from 'react'
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  Grow,
-  Paper,
-  Typography,
-} from '@mui/material'
+import { useState, useEffect } from 'react'
+import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 
-import CustomError from '../../../components/CustomError'
 import ProfileInfo from '../../../components/prospects/ProfileInfo'
-
+import CustomError from '../../../components/CustomError'
+import NoteTextarea from '../../../components/notes/NoteTextarea'
 
 // use this function to get the 'id' parameter from the url
 export async function getServerSideProps({ params }) {
@@ -23,14 +15,14 @@ function ProspectProfile(props) {
     name: "--",
     mail: "--",
     phone: "--",
-    fb: "--",
+    fb: "--"
   })
   const [hasError, setHasError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetch('/api/prospect/get-by-key?key=id&value=' + props.id, {
-      method: "GET",
+      method: "GET"
     })
       .then((response) => response.json())
       .then((response) => {
@@ -49,33 +41,38 @@ function ProspectProfile(props) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box sx={{ fontSize: '2rem', marginTop: '2rem' }}>
-            Page is Loading...
+          Page is Loading...
         </Box>
       </Box>
     )
-  }  
+  }
+
   if (hasError) {
     return (
-        <CustomError
-          title="User not found"
-          message="The user you are searching for does not exist."
-        />
+      <CustomError
+        title="User not found"
+        message="The user you are searching for does not exist."
+      />
     )
-  } 
+  }
+
   return (
-    <Paper sx={{ p: 1, margin: '2%' }}>
+    <Paper style={{ padding: 10, margin: '2%' }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <ProfileInfo prospect={prospect} />
         </Grid>
         <Grid item>
-          <Divider sx={{ height: '100%' }} orientation="vertical" />
+          <Divider style={{ height: '100%' }} orientation="vertical" />
         </Grid>
         <Grid item xs>
-          <Typography gutterBottom variant="h6">
+          <Typography gutterBottom variant="h6"
+            style={{ flexGrow: 1, fontSize: '1rem', marginLeft: '-0.37rem' }}>
             Notes
           </Typography>
-          <Divider sx={{ width: 'auto' }} orientation="horizontal" />
+          <Divider style={{ width: 'auto', marginBottom: '0.5rem' }}
+            orientation="horizontal" />
+          <NoteTextarea />
         </Grid>
       </Grid>
     </Paper>

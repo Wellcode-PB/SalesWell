@@ -1,4 +1,31 @@
 html, body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.create-note-button {
+  text-transform: none;
+  font-size: 0.67rem;
+  margin-top: -3.6rem;
+  width: 5.6rem;
+  block-size: 2rem;
+  white-space: nowrap;
+  margin-right: -0.4rem;
+}
+
+.save-note-button {
+  text-transform: none;
+  font-size: 0.67em;
+  width: 2.5rem;
+  block-size: 1.6rem;
+  margin-right: 0.2rem;
+  margin-top: 0.4rem;
+}
+
+.cancel-note-button {
+  text-transform: none;
+  font-size: 0.67em;
+  width: 2.5rem;
+  block-size: 1.6rem;
+  margin-top: 0.4rem;
 }

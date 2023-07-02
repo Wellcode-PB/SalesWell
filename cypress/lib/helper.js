@@ -94,3 +94,14 @@ export function validateEmailFormat(email) {
   cy.get('button[id="create"').click()
   cy.contains('Invalid email adress!')
 }
+
+export function createProspect(email, name, phone) {
+  cy.get('button[id="create-prospect"]').click()
+
+  cy.get('input[id="mail"]').click().type(email)
+  cy.get('input[id="name"]').click().type(name)
+  cy.get('input[id="phone"]').click().type(phone)
+
+  cy.get('button[id="create"]').click()
+  cy.contains('Prospect successfully created!')
+}
