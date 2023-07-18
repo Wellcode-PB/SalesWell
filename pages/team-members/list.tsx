@@ -28,10 +28,7 @@ function TeamMembersList() {
         endMessage={<h4>Nothing more to show</h4>}
       >
         {teamMembers.map((data) => (
-          <TeamMemberCard 
-            key={data.mail} 
-            teamMember={data} 
-          />
+          <TeamMemberCard key={data.mail} teamMember={data}/>
         ))}
       </InfiniteScroll>
     </>

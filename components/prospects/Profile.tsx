@@ -1,13 +1,13 @@
 import { Card, Divider, Link, Typography } from '@mui/material'
 import OpenInNewWindowIcon from '@mui/icons-material/OpenInNew';
-import ProfileActions from './ProfileActions';
+import ProfileActions from '../helper/ProfileActions';
 import Router from 'next/router';
 
 // use this PNF (Phone Number Format) constant
 // to format the phone number to a national format
 const PNF_NATIONAL = 2
 
-function ProfileInfo({ prospect }) {
+function Profile({ prospect }) {
   // create an instance of PhoneNumberUtil
   const phoneUtil = require('libphonenumbers').PhoneNumberUtil.getInstance()
 
@@ -31,7 +31,8 @@ function ProfileInfo({ prospect }) {
       <Typography sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <ProfileActions id={prospect.id} name={prospect.name} options={[
           { id: 0, label: 'Delete', action: deleteProfile },
-        ]} />
+          ]} entityType={'prospect'}
+        />
       </Typography>
       <img src="/img/prospect.png" style={{ margin: 'auto', 
           display: 'block', width: '65%', height: 'auto' }} />
@@ -62,4 +63,4 @@ function ProfileInfo({ prospect }) {
   )
 }
 
-export default ProfileInfo
+export default Profile
