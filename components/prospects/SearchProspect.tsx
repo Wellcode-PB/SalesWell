@@ -21,6 +21,7 @@ function SearchProspect({ setProspectsList }) {
         setHasResults({ message: response.error })
       } else {
         setHasResults(null)
+        console.log(response)
         setProspectsList((data) => [...data, ...response])
       }
     })

@@ -18,6 +18,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let query:any = prisma.bookings
   if (resultSource === 'prospects') {
     query = prisma.prospects
+    let orderBy:any = { id: sortOrder }
+    if (order === 'startsat') {
+      orderBy = { startsat: sortOrder }
+    }
+    const data = await query.findMany({
+      include: {
+        tags: true
+      },
+      orderBy: orderBy,
+      skip: skipCount,
+      take: 10
+    })
+    return res.send(data)
   }
 
   if (resultSource === 'team_members') {

@@ -30,7 +30,7 @@ function ProspectList() {
         endMessage={<h4>Nothing more to show</h4>}
       >
         {prospects.map((data) => (
-          <ProspectCard key={data.id} prospect={data}/>
+          <ProspectCard key={data.id} prospect={data} />
         ))}
       </InfiniteScroll>
     </>

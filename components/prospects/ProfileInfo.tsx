@@ -2,6 +2,7 @@ import { Card, Divider, Link, Typography } from '@mui/material'
 import OpenInNewWindowIcon from '@mui/icons-material/OpenInNew';
 import ProfileActions from './ProfileActions';
 import Router from 'next/router';
+import ProspectTags from '../tags/ProspectTags';
 
 // use this PNF (Phone Number Format) constant
 // to format the phone number to a national format
@@ -56,6 +57,10 @@ function ProfileInfo({ prospect }) {
               <OpenInNewWindowIcon fontSize='small' sx={{ ml: 1 }}/>
             </Link>
             : 'No Facebook provided' }
+        </Typography>
+        <Divider sx={{ width: 'auto', m: 0.5 }} orientation="horizontal" />
+        <Typography gutterBottom variant="subtitle1" sx={{ m: '2.5%' }}>
+          <ProspectTags prospectId={prospect.id} />
         </Typography>
       </Card>
     </>
