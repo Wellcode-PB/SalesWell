@@ -41,6 +41,14 @@ model prospects {
   mail     String     @unique
   fb       String?
   phone    String     @unique
+  tags     tags[]
+}
+
+model tags {
+  id          Int @id @default(autoincrement())
+  name        String
+  prospects   prospects @relation(fields: [prospectId], references: [id])
+  prospectId  Int
 }
 
 model team_members {
