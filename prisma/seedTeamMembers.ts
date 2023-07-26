@@ -12,6 +12,7 @@ async function addTeamMembersList() {
       mail: 'team_member' + index + '@gmail.com',
       password: 'wasd' + index,
       role: Role.USER, 
+      account_state: 'ENABLED',
     } })
   }
   // The second half have the role of ADMIN.
@@ -21,6 +22,7 @@ async function addTeamMembersList() {
       mail: 'admin_member' + index + '@gmail.com',
       password: 'sdwa' + index,
       role: Role.ADMIN,
+      account_state: 'ENABLED',
     } })
   }
 }

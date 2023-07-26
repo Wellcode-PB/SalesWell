@@ -1,14 +1,15 @@
-import { Card, CardActionArea, CardContent } from '@mui/material'
-import Link from 'next/link'
-import Router from 'next/router'
-import React from 'react'
+import { Card, CardActionArea, CardContent } from '@mui/material';
+import Link from 'next/link';
+import React from 'react';
 
 function TeamMemberCard({ teamMember }) {
+  const card = teamMember.account_state === 'DISABLED' ? 'grey' : '';
 
   return (
-    <Link href={"/team-members/profile/" + teamMember.mail}>
+    <Link href={'/team-members/profile/' + teamMember.mail}>
       <CardActionArea>
-        <Card sx={{ width: 'auto', height: 'auto', m: 1 }} elevation={5}>
+        <Card sx={{ width: 'auto', height: 'auto', m: 1, background: card }}
+          elevation={5}>
           <CardContent id={teamMember.mail}>
             <h2>{teamMember.name}</h2>
             <p>{teamMember.mail}</p>
@@ -17,7 +18,7 @@ function TeamMemberCard({ teamMember }) {
         </Card>
       </CardActionArea>
     </Link>
-  )
+  );
 }
 
-export default TeamMemberCard
+export default TeamMemberCard;

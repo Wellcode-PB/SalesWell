@@ -12,15 +12,33 @@ function Profile({ teamMember }) {
     })
     .then(() => {
       Router.replace(`/team-members/list`);
-    });
+    })
+  }
+  
+  function toggleProfile(id) {
+    fetch(`/api/team-member/toggleAccount`, {
+      method: 'PUT',
+      headers: { 'Content_Type': 'application/json' },
+      body: JSON.stringify({
+        mail: id,
+        state: teamMember.account_state === 'ENABLED'? 'DISABLED' : 'ENABLED'})
+    }).then(() => {
+      Router.replace(`/team-members/list`)
+    })
   }
 
   return (
     <>
       <Typography sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <ProfileActions id={teamMember.mail} name={teamMember.name} options={[
-            session && session.role === 'ADMIN' ?
-            {id: 0, label: 'Delete', action: deleteProfile }: null ]} 
+        <ProfileActions id={teamMember.mail} name={teamMember.name} 
+          options={
+            session && session.role === 'ADMIN' ? [
+                teamMember.account_state === "DISABLED" ?
+                  {id: 0, label: 'Delete', action: deleteProfile } : null,
+                teamMember.account_state === 'ENABLED' ?
+                  {id: 1, label: 'Disable', action: toggleProfile } : 
+                  {id: 2, label: 'Enable', action: toggleProfile } 
+                ]:[]}
             entityType={'team member'}
         />
       </Typography>

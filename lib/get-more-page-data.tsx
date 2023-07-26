@@ -14,7 +14,8 @@ export default async function getMorePageData(getDataParams) {
   fetch('/api/utils/get-paginated-data?skip=' + getDataParams.data.length + 
   '&resultSource=' + getDataParams.resultSource + 
   '&orderBy=' + getDataParams.orderBy +
-  '&sortOrder=' + getDataParams.sortOrder, {
+  '&sortOrder=' + getDataParams.sortOrder +
+  '&filter='+ getDataParams.filter, {
     method: 'GET'
   })
   .then(response => response.json())

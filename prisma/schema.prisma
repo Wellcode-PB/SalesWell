@@ -49,6 +49,7 @@ model team_members {
   password   String
   last_login DateTime?
   role       Role      @default(USER)
+  account_state    String    @default("ENABLED")
 }
 
 enum Role {
