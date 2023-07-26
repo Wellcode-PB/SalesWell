@@ -22,9 +22,12 @@ export default NextAuth({
 
         if (res.status === 200) {
           const user = await JSON.parse(userResponse.user)
-          return user
+          if (user.account_state === "ENABLED") {
+            return user
+          } else {
+            return null
+          }
         }
-        return null
       }
     }),
   ],

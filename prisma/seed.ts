@@ -33,14 +33,16 @@ let seedData = async (): Promise<void> => {
       name: 'normal user',
       password: await bcrypt.hash('password', 10),
       role: Role.USER,
-      last_login: null
+      last_login: null,
+      account_state: 'ENABLED'
     },
     {
       mail: 'admin@example.com',
       name: 'admin user',
       password: await bcrypt.hash('password', 10),
       role: Role.ADMIN,
-      last_login: null
+      last_login: null,
+      account_state: 'ENABLED'
     },
   ]
 

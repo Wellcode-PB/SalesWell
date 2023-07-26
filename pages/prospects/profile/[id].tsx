@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 
-import ProfileInfo from '../../../components/prospects/ProfileInfo'
+import Profile from '../../../components/prospects/Profile'
 import CustomError from '../../../components/CustomError'
 import NoteTextarea from '../../../components/notes/NoteTextarea'
 
@@ -60,7 +60,7 @@ function ProspectProfile(props) {
     <Paper style={{ padding: 10, margin: '2%' }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <ProfileInfo prospect={prospect} />
+          <Profile prospect={prospect} />
         </Grid>
         <Grid item>
           <Divider style={{ height: '100%' }} orientation="vertical" />
