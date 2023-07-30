@@ -41,6 +41,16 @@ model prospects {
   mail     String     @unique
   fb       String?
   phone    String     @unique
+  notes    notes[]
+}
+
+model notes {
+  id         Int      @id @default(autoincrement())
+  prospectId Int
+  note       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  prospect   prospects  @relation(fields: [prospectId], references: [id])
 }
 
 model team_members {

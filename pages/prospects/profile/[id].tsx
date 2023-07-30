@@ -3,7 +3,7 @@ import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 
 import ProfileInfo from '../../../components/prospects/ProfileInfo'
 import CustomError from '../../../components/CustomError'
-import NoteTextarea from '../../../components/notes/NoteTextarea'
+import NoteList from '../../../components/prospects/NoteList'
 
 // use this function to get the 'id' parameter from the url
 export async function getServerSideProps({ params }) {
@@ -72,7 +72,7 @@ function ProspectProfile(props) {
           </Typography>
           <Divider style={{ width: 'auto', marginBottom: '0.5rem' }}
             orientation="horizontal" />
-          <NoteTextarea />
+          <NoteList prospectId={props.id} />
         </Grid>
       </Grid>
     </Paper>

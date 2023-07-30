@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 import CreateIcon from '@mui/icons-material/Create'
 import SaveIcon from '@mui/icons-material/Save'
+import NoteTextField from '../notes/NoteTextField'
 
-function NoteTextarea() {
+function NoteTextarea({prospectId}) {
   const [note, setNote] = useState('')
   const [isEditing, setIsEditing] = useState(false)
 
@@ -13,6 +14,18 @@ function NoteTextarea() {
   }
 
   const handleCancelNote = () => {
+    setIsEditing(false)
+    setNote('')
+  }
+
+  function createNote() {
+    fetch('/api/prospect/prospect-note', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note: note, prospectId: prospectId })
+    })
+    .then((response) => response.json())
+    .catch((error) => console.error('Error:', error))
     setIsEditing(false)
     setNote('')
   }
@@ -37,11 +50,8 @@ function NoteTextarea() {
       </Box>
       {isEditing && (
         <Box>
-          <TextField
+          <NoteTextField
             id="prospect-note"
-            multiline
-            minRows={4}
-            fullWidth
             label="Leave a note here..."
             value={note}
             onChange={handleNoteChange}
@@ -52,7 +62,8 @@ function NoteTextarea() {
               id="save"
               variant="outlined"
               color="success"
-              disabled={!note}>
+              disabled={!note}
+              onClick={createNote}>
               <SaveIcon style={{ fontSize: '1.4rem' }} />
               Save
             </Button>
