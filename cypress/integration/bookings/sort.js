@@ -7,7 +7,7 @@ import {
 describe('Sort bookings', () => {
   it('Should be sorted by id by default', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
 
     //check if the bookings are sorted by id the first time, taking all of them 
     //and checking their order, which should be ascending
@@ -18,7 +18,7 @@ describe('Sort bookings', () => {
 
   it('Check sorting by booking id', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
 
     //first field in the booking is "id" (see in createBookingsTest function)
     const sortById = 0
@@ -55,7 +55,7 @@ describe('Sort bookings', () => {
 
   it('Check sorting by booking start date', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
 
     //the 5th field in the booking is "startsat" 
     //(see in createBookingsTest function)

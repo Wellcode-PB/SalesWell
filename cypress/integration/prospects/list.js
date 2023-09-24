@@ -10,7 +10,7 @@ describe('List prospects', () => {
     }
   )
   it('Should not have permissions when not logged in', () => {
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     cy.contains(prospect1).should('not.exist')
     cy.contains('Welcome to SalesWell')
@@ -18,7 +18,7 @@ describe('List prospects', () => {
 
   it('Should have permissions when logged in as user', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     //only prospects 1-10 should be displayed
     checkProspectsAreVisible()
@@ -29,7 +29,7 @@ describe('List prospects', () => {
 
   it('Should have permissions when logged in as admin', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     //only prospects 1-10 should be displayed
     checkProspectsAreVisible()
@@ -40,7 +40,7 @@ describe('List prospects', () => {
 
   it('Should display many prospects on scrolling down', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
     
     checkProspectsAreVisible()
     cy.contains('Prospect 11').should('not.exist')
@@ -58,7 +58,7 @@ describe('List prospects', () => {
 describe('Create prospect', () => {
   it('Should have permissions when logged in as user', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -73,14 +73,14 @@ describe('Create prospect', () => {
     cy.contains('Prospect successfully created!')
 
     // check if the user is directed to the newly created prospect
-    cy.url().should('eq', 'http://localhost:3000/prospects/profile/21')
+    cy.url().should('eq', '/prospects/profile/21')
     cy.contains('test@wellcode.com')
     cy.contains("Notes")
 
     // should go to the prospects list and scroll all the way down 3 times
     // to check if the newly created prospect appears in the list
     cy.contains('Prospects').click()
-    cy.url().should('eq', 'http://localhost:3000/prospects/list')
+    cy.url().should('eq', '/prospects/list')
     cy.scrollTo('bottom').contains('Prospect 10')
     cy.scrollTo('bottom').contains('Prospect 20')
 
@@ -91,7 +91,7 @@ describe('Create prospect', () => {
 
   it('Should not create a prospect with existing email', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -108,7 +108,7 @@ describe('Create prospect', () => {
 
   it('Should not create a prospect with invalid email address', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -139,7 +139,7 @@ describe('Create prospect', () => {
 
   it('Should not create a prospect with existing phone number', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -156,7 +156,7 @@ describe('Create prospect', () => {
 
   it('Should not create a prospect with invalid phone number format', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -185,7 +185,7 @@ describe('Create prospect', () => {
 
   it('Should not create a prospect with missing phone number or email', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // open the slide pane to create a prospect
     cy.get('button[id="create-prospect"').click()
@@ -207,7 +207,7 @@ describe('Create prospect', () => {
 describe('Search prospect', () => {
   it('Should have permissions when logged in as user', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/prospects/list')
+    cy.visit('/prospects/list')
 
     // search prospect by email
     cy.get('input[id="search-bar"').click().type('test@wellcode.com')

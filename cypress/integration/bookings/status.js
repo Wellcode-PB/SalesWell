@@ -1,6 +1,6 @@
 describe('Booking status', () => {
   it('Should not have permissions when not logged in', () => {
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
     
     cy.contains('Welcome to SalesWell')
 
@@ -11,7 +11,7 @@ describe('Booking status', () => {
 
   it('Should have permissions when logged in as user', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
     
     cy.contains('No status')
 
@@ -21,7 +21,7 @@ describe('Booking status', () => {
 
   it('Should have permissions when logged in as admin', () => {
     cy.login('admin@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
     
     cy.contains('No status')
 
@@ -32,7 +32,7 @@ describe('Booking status', () => {
   it('Change status when status button is clicked and another status is chosen', 
     () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
     
     cy.contains('No status')
     cy.contains('active').should('not.exist')
@@ -59,7 +59,7 @@ describe('Booking status', () => {
 
   it('Check if the statuses have been updated in the database', () => {
     cy.login('normal@example.com', 'password')
-    cy.visit('http://localhost:3000/booking/list')
+    cy.visit('/booking/list')
 
     cy.contains('No status')
     cy.contains('active')
